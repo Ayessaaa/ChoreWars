@@ -12,7 +12,7 @@
     />
 
     <title>Chore Wars</title>
-    <link rel="icon" href="imgs/logo.png" type="image/x-icon">
+    <link rel="icon" href="imgs/logo.png" type="image/x-icon" />
     <style>
       body {
         font-family: "Poppins";
@@ -20,7 +20,6 @@
     </style>
   </head>
   <body class="bg-slate-900 bg-no-repeat bg-fixed px-3 py-10">
-
     <div
       class="w-[600px] h-[750px] rounded-full mt-32 rotate-12 bg-red-700/20 blur-3xl fixed -ml-56"
     ></div>
@@ -30,10 +29,10 @@
     ></div>
 
     <div
-      class="w-[600px] h-96 rounded-full -bottom-32 bg-red-700/10 blur-3xl fixed  right-96"
+      class="w-[600px] h-96 rounded-full -bottom-32 bg-red-700/10 blur-3xl fixed right-96"
     ></div>
 
-    <div class="flex gap-5 mx-auto w-fit  mt-10">
+    <div class="flex gap-5 mx-auto w-fit mt-10">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         id="Layer_1"
@@ -59,12 +58,16 @@
             >Wars</span
           >
         </p>
-        <div class=" rounded-md bg-gradient-to-tr">
+        <div class="rounded-md bg-gradient-to-tr">
           <p class="text-neutral-300 font-medium text-xl text-right">
             turning
-            <span class="text-red-500 underline underline-offset-2 drop-shadow-[0_10px_10px_rgba(255,0,0,.5)]">chaos</span>
+            <span
+              class="text-red-500 underline underline-offset-2 drop-shadow-[0_10px_10px_rgba(255,0,0,.5)]"
+              >chaos</span
+            >
             into
-            <span class="text-sky-500 underline underline-offset-2 drop-shadow-[0_10px_10px_rgba(14,165,233,.5)]"
+            <span
+              class="text-sky-500 underline underline-offset-2 drop-shadow-[0_10px_10px_rgba(14,165,233,.5)]"
               >cleanliness</span
             >
           </p>
@@ -72,10 +75,63 @@
       </div>
     </div>
 
-    
+    <div
+      class="w-fit rounded-3xl mx-auto p-px bg-gradient-to-b from-red-500 to-red-500/10 mt-20"
+    >
+      <div class="bg-slate-900/80 mx-auto p-5 rounded-[calc(1.5rem-1px)] w-96">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="size-20 stroke-red-500 drop-shadow-[0_5px_5px_rgba(255,0,0,.3)] mx-auto"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+          />
+        </svg>
+        <p class="text-red-100/90 font-semibold text-2xl text-center">Log In</p>
+        <p class="text-red-400/90 text-sm text-center">Access Your Account</p>
 
-    
+        <div class="flex flex-col px-5 mt-5">
+          <label for="username" class="text-sm font-normal text-red-500/80"
+            >Username</label
+          >
+          <input
+            type="text"
+            name="username"
+            id="username"
+            placeholder="Username"
+            class="bg-red-500/10  border-red-500/50 border px-3 py-1 rounded-md placeholder:text-red-400/50 focus:bg-red-500/20 active:bg-red-500/30 text-red-50 outline-0 focus:ring-2 focus:ring-red-500/20"
+          />
+
+          <label for="password" class="text-sm font-normal text-red-500/80 mt-2"
+            >Password</label
+          >
+          <input
+            type="password"
+            name="password"
+            id="password"
+            placeholder="Password"
+            class="bg-red-500/10 border-red-500/50 border px-3 py-1 rounded-md placeholder:text-red-400/50 focus:bg-red-500/20 active:bg-red-500/30 text-red-50 outline-0 focus:ring-2 focus:ring-red-500/20"
+          />
+
+          <div class="w-fit mx-auto mb-2">
+            <button
+              class="hover:bg-red-600/80 transition-all active:bg-red-500/50 active:text-red-500 bg-red-600/70 hover:scale-105 px-5 py-1 text-xl text-white font-semibold rounded-lg mt-10 hover:shadow-lg hover:shadow-red-500/20"
+            >
+              Log In
+            </button>
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+
+    <div><p class="text-red-400/90 text-sm text-center mt-7 ">Create an Account? <a href="sign-up.html" class="underline text-red-600">Sign Up Here</a></p></div>
   </body>
 </html>
-
-<!-- https://www.creative-tim.com/twcomponents/component/gradient-border -->
