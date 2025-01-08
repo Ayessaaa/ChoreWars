@@ -679,6 +679,10 @@ video {
   margin-bottom: 0.75rem;
 }
 
+.-mt-0\.5 {
+  margin-top: -0.125rem;
+}
+
 .block {
   display: block;
 }
@@ -738,6 +742,16 @@ video {
 .size-8 {
   width: 2rem;
   height: 2rem;
+}
+
+.size-12 {
+  width: 3rem;
+  height: 3rem;
+}
+
+.size-9 {
+  width: 2.25rem;
+  height: 2.25rem;
 }
 
 .h-10 {
@@ -1059,6 +1073,12 @@ video {
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
 
+.from-orange-500 {
+  --tw-gradient-from: #f97316 var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(249 115 22 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
 .to-blue-500\/10 {
   --tw-gradient-to: rgb(59 130 246 / 0.1) var(--tw-gradient-to-position);
 }
@@ -1081,6 +1101,10 @@ video {
 
 .to-yellow-500\/10 {
   --tw-gradient-to: rgb(234 179 8 / 0.1) var(--tw-gradient-to-position);
+}
+
+.to-orange-500\/10 {
+  --tw-gradient-to: rgb(249 115 22 / 0.1) var(--tw-gradient-to-position);
 }
 
 .bg-fixed {
@@ -1130,6 +1154,10 @@ video {
 
 .fill-yellow-500 {
   fill: #eab308;
+}
+
+.fill-yellow-500\/10 {
+  fill: rgb(234 179 8 / 0.1);
 }
 
 .stroke-red-500 {
@@ -1440,6 +1468,18 @@ video {
   color: rgb(17 24 39 / var(--tw-text-opacity, 1));
 }
 
+.text-red-500\/60 {
+  color: rgb(239 68 68 / 0.6);
+}
+
+.text-yellow-500\/60 {
+  color: rgb(234 179 8 / 0.6);
+}
+
+.text-yellow-500\/80 {
+  color: rgb(234 179 8 / 0.8);
+}
+
 .underline {
   text-decoration-line: underline;
 }
@@ -1564,6 +1604,11 @@ video {
 
 .drop-shadow-\[0_5px_5px_rgba\(255\2c 0\2c 0\2c \.3\)\] {
   --tw-drop-shadow: drop-shadow(0 5px 5px rgba(255,0,0,.3));
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+
+.drop-shadow-\[0_5px_5px_rgba\(234\2c 179\2c 8\2c \.3\)\] {
+  --tw-drop-shadow: drop-shadow(0 5px 5px rgba(234,179,8,.3));
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 
@@ -1789,6 +1834,10 @@ video {
 
 .active\:fill-red-600:active {
   fill: #dc2626;
+}
+
+.active\:fill-yellow-600:active {
+  fill: #ca8a04;
 }
 
 .active\:text-red-500:active {
