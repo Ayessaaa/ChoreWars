@@ -77,14 +77,16 @@ const createHouseholdPost = async (req, res) => {
         console.log(err);
       });
 
-    let member = new householdMember({
-      username: req.session.username,
-      household: req.body.household,
-    });
+    for (let i = 1; i < Object.values(req.body).length; i+=2) {
 
-    console.log(req.body)
-
-    await member.save();
+      const member = new householdMember({
+        username: Object.values(req.body)[i],
+        fullname: Object.values(req.body)[i+1],
+        household: req.body.household,
+      });
+      
+      await member.save();
+    }
 
     res.redirect("/home");
   } else {

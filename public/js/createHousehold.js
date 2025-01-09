@@ -25,19 +25,35 @@ window.onload = function () {
                     />
                   </svg>
 
-                  <div class="flex flex-col flex-1">
-                    <label
-                      for="name${nameNum}"
-                      class="text-sm font-normal text-sky-500/80"
-                      >Name</label
-                    >
-                    <input
-                      type="text"
-                      name="name${nameNum}"
-                      id="name${nameNum}"
-                      placeholder="Name"
-                      class="bg-sky-500/10 border-sky-500/50 w-full border px-3 py-0.5 rounded-md placeholder:text-sky-400/50 focus:bg-sky-500/20 active:bg-sky-500/30 text-sky-50 outline-0 focus:ring-2 focus:ring-sky-500/20"
-                    />
+                  <div class="flex flex-col flex-1 gap-0.5">
+                    <div class="flex gap-2 items-end">
+                      <label
+                        for="username${nameNum}"
+                        class="text-sm font-normal text-sky-500/80"
+                        >Username:</label
+                      >
+                      <input
+                        type="text"
+                        name="username${nameNum}"
+                        id="username${nameNum}"
+                        placeholder=""
+                        class="bg-sky-500/10 border-sky-500/50 w-full border px-2 text-sm rounded-md placeholder:text-sky-400/50 focus:bg-sky-500/20 active:bg-sky-500/30 text-sky-50 outline-0 focus:ring-2 focus:ring-sky-500/20"
+                      />
+                    </div>
+                    <div class="flex gap-2 items-end">
+                      <label
+                        for="name${nameNum}"
+                        class="text-sm font-normal text-sky-500/80 shrink-0"
+                        >Full Name:</label
+                      >
+                      <input
+                        type="text"
+                        name="name${nameNum}"
+                        id="name${nameNum}"
+                        placeholder=""
+                        class="bg-sky-500/10 border-sky-500/50 w-full border px-2 text-sm rounded-md placeholder:text-sky-400/50 focus:bg-sky-500/20 active:bg-sky-500/30 text-sky-50 outline-0 focus:ring-2 focus:ring-sky-500/20"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
