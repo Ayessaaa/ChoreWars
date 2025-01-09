@@ -18,6 +18,8 @@
         font-family: "Poppins";
       }
     </style>
+
+
   </head>
   <body class="bg-slate-900 bg-no-repeat bg-fixed px-3 py-10">
     <div
@@ -198,7 +200,10 @@
       </button>
     </div>
 
-    <form class="lg:w-1/2 min-w-[500px] lg:min-w-[900px] mx-auto mt-10 z-10" method="POST" >
+    <form
+      class="lg:w-1/2 min-w-[500px] lg:min-w-[900px] mx-auto mt-10 z-10"
+      method="POST"
+    >
       <p class="font-semibold text-slate-300 text-2xl lg:text-left text-center">
         Welcome Head,
         <span
@@ -238,7 +243,7 @@
               >Household Name</label
             >
             <input
-             required
+              required
               type="text"
               name="household"
               id="household"
@@ -278,40 +283,81 @@
             </p>
           </div>
 
-          <div class="flex flex-col gap-1 mt-5">
-            <div class="flex gap-1">
-              <div
-                class="border border-sky-500/50 rounded-xl py-2 px-5 bg-sky-600/10 flex items-center gap-5 flex-1"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  id="Layer_1"
-                  data-name="Layer 1"
-                  viewBox="0 0 24 24"
-                  class="size-10 fill-sky-600 drop-shadow-[0_5px_5px_rgba(2,132,199,.3)]"
+          <div class="flex flex-col gap-2 mt-5" id="member_div">
+            <div class="flex flex-col gap-1">
+              <div class="flex gap-1">
+                <div
+                  class="border border-sky-500/50 rounded-xl py-2 px-5 bg-sky-600/10 flex items-center gap-5 flex-1"
                 >
-                  <path
-                    d="m12,0C5.383,0,0,5.383,0,12s5.383,12,12,12,12-5.383,12-12S18.617,0,12,0Zm-3.48,20.299c.107-1.835,1.619-3.299,3.48-3.299s3.373,1.464,3.48,3.299c-1.071.451-2.247.701-3.48.701s-2.409-.25-3.48-.701Zm9.668-1.781c-.84-2.617-3.296-4.518-6.188-4.518s-5.348,1.901-6.188,4.518c-1.727-1.641-2.812-3.953-2.812-6.518C3,7.037,7.038,3,12,3s9,4.037,9,9c0,2.565-1.084,4.877-2.812,6.518Zm-2.689-10.018c0,1.933-1.567,3.5-3.5,3.5s-3.5-1.567-3.5-3.5,1.567-3.5,3.5-3.5,3.5,1.567,3.5,3.5Z"
-                  />
-                </svg>
-
-                <div class="flex flex-col flex-1">
-                  <label for="name" class="text-sm font-normal text-sky-500/80"
-                    >Name</label
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    id="Layer_1"
+                    data-name="Layer 1"
+                    viewBox="0 0 24 24"
+                    class="size-10 fill-sky-600 drop-shadow-[0_5px_5px_rgba(2,132,199,.3)]"
                   >
-                  <input
-                    type="text"
-                    name="name"
-                    id="name"
-                    placeholder="Name"
-                    class="bg-sky-500/10 border-sky-500/50 w-full border px-3 py-0.5 rounded-md placeholder:text-sky-400/50 focus:bg-sky-500/20 active:bg-sky-500/30 text-sky-50 outline-0 focus:ring-2 focus:ring-sky-500/20"
-                  />
+                    <path
+                      d="m12,0C5.383,0,0,5.383,0,12s5.383,12,12,12,12-5.383,12-12S18.617,0,12,0Zm-3.48,20.299c.107-1.835,1.619-3.299,3.48-3.299s3.373,1.464,3.48,3.299c-1.071.451-2.247.701-3.48.701s-2.409-.25-3.48-.701Zm9.668-1.781c-.84-2.617-3.296-4.518-6.188-4.518s-5.348,1.901-6.188,4.518c-1.727-1.641-2.812-3.953-2.812-6.518C3,7.037,7.038,3,12,3s9,4.037,9,9c0,2.565-1.084,4.877-2.812,6.518Zm-2.689-10.018c0,1.933-1.567,3.5-3.5,3.5s-3.5-1.567-3.5-3.5,1.567-3.5,3.5-3.5,3.5,1.567,3.5,3.5Z"
+                    />
+                  </svg>
+
+                  <div class="flex flex-col flex-1">
+                    <label
+                      for="name1"
+                      class="text-sm font-normal text-sky-500/80"
+                      >Name</label
+                    >
+                    <input
+                      type="text"
+                      name="name1"
+                      id="name1"
+                      placeholder="Name"
+                      class="bg-sky-500/10 border-sky-500/50 w-full border px-3 py-0.5 rounded-md placeholder:text-sky-400/50 focus:bg-sky-500/20 active:bg-sky-500/30 text-sky-50 outline-0 focus:ring-2 focus:ring-sky-500/20"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex flex-col gap-1">
+              <div class="flex gap-1">
+                <div
+                  class="border border-sky-500/50 rounded-xl py-2 px-5 bg-sky-600/10 flex items-center gap-5 flex-1"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    id="Layer_1"
+                    data-name="Layer 1"
+                    viewBox="0 0 24 24"
+                    class="size-10 fill-sky-600 drop-shadow-[0_5px_5px_rgba(2,132,199,.3)]"
+                  >
+                    <path
+                      d="m12,0C5.383,0,0,5.383,0,12s5.383,12,12,12,12-5.383,12-12S18.617,0,12,0Zm-3.48,20.299c.107-1.835,1.619-3.299,3.48-3.299s3.373,1.464,3.48,3.299c-1.071.451-2.247.701-3.48.701s-2.409-.25-3.48-.701Zm9.668-1.781c-.84-2.617-3.296-4.518-6.188-4.518s-5.348,1.901-6.188,4.518c-1.727-1.641-2.812-3.953-2.812-6.518C3,7.037,7.038,3,12,3s9,4.037,9,9c0,2.565-1.084,4.877-2.812,6.518Zm-2.689-10.018c0,1.933-1.567,3.5-3.5,3.5s-3.5-1.567-3.5-3.5,1.567-3.5,3.5-3.5,3.5,1.567,3.5,3.5Z"
+                    />
+                  </svg>
+
+                  <div class="flex flex-col flex-1">
+                    <label
+                      for="name2"
+                      class="text-sm font-normal text-sky-500/80"
+                      >Name</label
+                    >
+                    <input
+                      type="text"
+                      name="name2"
+                      id="name2"
+                      placeholder="Name"
+                      class="bg-sky-500/10 border-sky-500/50 w-full border px-3 py-0.5 rounded-md placeholder:text-sky-400/50 focus:bg-sky-500/20 active:bg-sky-500/30 text-sky-50 outline-0 focus:ring-2 focus:ring-sky-500/20"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
           <button
+          id="add_member"
+            type="button"
             title="add"
             class="border mb-2 text-medium mt-2 hover:scale-105 active:bg-blue-600/20 active:text-slate-400 hover:bg-blue-700/30 hover:shadow-lg hover:shadow-blue-500/10 border-blue-500/50 transition-all rounded-xl py-2 px-5 bg-blue-600/10 flex items-center gap-3 flex-1 w-full text-slate-300 justify-center"
           >
@@ -335,7 +381,7 @@
         class="w-fit rounded-3xl p-px bg-gradient-to-b from-yellow-500 to-yellow-500/10 mt-10 mx-auto group z-20"
       >
         <button
-        type="submit"
+          type="submit"
           title="create"
           class="bg-slate-900/80 mx-auto py-2.5 rounded-[calc(1.5rem-1px)] px-8 gap-3 items-center flex text-xl font-semibold text-yellow-500 group-hover:bg-slate-900/70 transition-all group-hover:scale-105 group-active:bg-slate-900/60 group-active:text-yellow-500/80"
         >
@@ -354,5 +400,7 @@
         </button>
       </div>
     </form>
+
+    <script type="text/javascript" src="/js/createHousehold.js"></script>
   </body>
 </html>

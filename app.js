@@ -66,11 +66,11 @@ app.get("/logout", (req, res) => {
   });
 });
 
-app.get("/", (req, res)=>{
-    res.redirect("home")
-})
+app.get("/", (req, res) => {
+  res.redirect("home");
+});
 
-app.get("/home", siteController.home)
+app.get("/home", siteController.home);
 
-app.get("/create-household", siteController.createHousehold)
-app.post("/create-household", siteController.createHouseholdPost)
+app.get("/create-household", siteController.createHousehold);
+app.post("/create-household", siteController.createHouseholdPost);

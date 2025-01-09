@@ -7,7 +7,10 @@ const bcrypt = require("bcryptjs");
 const session = require("express-session");
 
 const User = require("../models/user");
-const householdMemberSchema = require("../models/household_member");
+
+const householdMemberSchema = require("../schemas/household_member_schema");
+const householdChoreSchema = require("../schemas/household_chore_schema");
+const householdFeedSchema = require("../schemas/household_feed_schema");
 
 const home = (req, res) => {
   const isLoggedIn = req.session.isLoggedIn;
@@ -15,7 +18,7 @@ const home = (req, res) => {
   if (isLoggedIn) {
     User.find({ username: req.session.username }).then((result) => {
       if (result[0].admin) {
-        console.log(result[0].household_name)
+        console.log(result[0].household_name);
         if (result[0].household_name === undefined) {
           res.redirect("/create-household");
         } else {
@@ -40,18 +43,28 @@ const createHousehold = (req, res) => {
   }
 };
 
-const createHouseholdPost = (req, res) => {
+const createHouseholdPost = async (req, res) => {
   const isLoggedIn = req.session.isLoggedIn;
 
   if (isLoggedIn) {
+    
     const householdMember = mongoose.model(
       "household_" + req.body.household + "_member",
       householdMemberSchema
     );
-    householdMember
-      .createCollection()
-      .then((result) => console.log("Collection Created"))
-      .catch((err) => console.log(err));
+    householdMember.createCollection().catch((err) => console.log(err));
+
+    const householdChore = mongoose.model(
+      "household_" + req.body.household + "_chore",
+      householdChoreSchema
+    );
+    householdChore.createCollection().catch((err) => console.log(err));
+
+    const householdFeed = mongoose.model(
+      "household_" + req.body.household + "_feed",
+      householdFeedSchema
+    );
+    householdFeed.createCollection().catch((err) => console.log(err));
 
     User.findOneAndUpdate(
       { username: req.session.username },
@@ -66,10 +79,10 @@ const createHouseholdPost = (req, res) => {
 
     let member = new householdMember({
       username: req.session.username,
-      household: req.body.household
+      household: req.body.household,
     });
 
-    member.save();
+    await member.save();
 
     res.redirect("/home");
   } else {
