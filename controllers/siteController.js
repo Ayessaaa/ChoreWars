@@ -82,6 +82,8 @@ const createHouseholdPost = async (req, res) => {
       household: req.body.household,
     });
 
+    console.log(req.body)
+
     await member.save();
 
     res.redirect("/home");

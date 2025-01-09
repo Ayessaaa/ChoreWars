@@ -2,11 +2,13 @@ window.onload = function () {
   memberDiv = document.getElementById("member_div");
   addMember = document.getElementById("add_member");
 
-  nameNum = 3
+  nameNum = 3;
 
   addMember.addEventListener("click", function () {
     console.log("asdasd");
-    let html = `<div class="flex flex-col gap-1">
+
+    const newDiv = document.createElement("div");
+    newDiv.innerHTML = `<div class="flex flex-col gap-1">
               <div class="flex gap-1">
                 <div
                   class="border border-sky-500/50 rounded-xl py-2 px-5 bg-sky-600/10 flex items-center gap-5 flex-1"
@@ -40,7 +42,7 @@ window.onload = function () {
                 </div>
               </div>
             </div>`;
-    memberDiv.innerHTML += html;
-    nameNum += 1
+    memberDiv.appendChild(newDiv);
+    nameNum += 1;
   });
 };
