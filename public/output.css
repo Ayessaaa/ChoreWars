@@ -1413,6 +1413,10 @@ video {
   font-weight: 600;
 }
 
+.capitalize {
+  text-transform: capitalize;
+}
+
 .tracking-tight {
   letter-spacing: -0.025em;
 }
@@ -1561,6 +1565,16 @@ video {
 
 .text-yellow-500\/80 {
   color: rgb(234 179 8 / 0.8);
+}
+
+.text-sky-400 {
+  --tw-text-opacity: 1;
+  color: rgb(56 189 248 / var(--tw-text-opacity, 1));
+}
+
+.text-sky-300 {
+  --tw-text-opacity: 1;
+  color: rgb(125 211 252 / var(--tw-text-opacity, 1));
 }
 
 .underline {

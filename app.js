@@ -74,3 +74,8 @@ app.get("/home", siteController.home);
 
 app.get("/create-household", siteController.createHousehold);
 app.post("/create-household", siteController.createHouseholdPost);
+
+app.get("/join-link/:id", siteController.joinLink)
+app.post("/join-link/:id", upload.single('image'), siteController.joinLinkPost)
+
+app.get("/add-chore", siteController.addChore)

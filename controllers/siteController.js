@@ -26,12 +26,17 @@ const home = (req, res) => {
             "household_" + result[0].household_name + "_member",
             householdMemberSchema
           );
-          householdMember.find()
-          .then((resultMember) => {
-            res.render("admin", {member: resultMember});
-          })
-          .catch((err)=>{console.log(err)});
-          
+          householdMember
+            .find()
+            .then((resultMember) => {
+              res.render("admin", {
+                household_name: result[0].household_name,
+                member: resultMember,
+              });
+            })
+            .catch((err) => {
+              console.log(err);
+            });
         }
       } else {
         res.render("home");
@@ -101,8 +106,85 @@ const createHouseholdPost = async (req, res) => {
   }
 };
 
+const joinLink = (req, res) => {
+  const isLoggedIn = req.session.isLoggedIn;
+
+  if (isLoggedIn) {
+    User.find({ username: req.session.username }).then((result) => {
+      const householdMember = mongoose.model(
+        "household_" + result[0].household_name + "_member",
+        householdMemberSchema
+      );
+      householdMember
+        .find({ _id: req.params.id })
+        .then((resultMember) => {
+          res.render("joinLink", {
+            household_name: result[0].household_name,
+            member: resultMember[0],
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    });
+  } else {
+    res.redirect("/log-in");
+  }
+};
+
+const joinLinkPost = async (req, res) => {
+  const isLoggedIn = req.session.isLoggedIn;
+  let hashedPassword = await bcrypt.hash(req.body.password, 8);
+
+  var path = "/img/no-img.svg";
+
+  try {
+    path = req.file.path;
+  } catch {
+    path = "/img/no-img.svg";
+  }
+
+  User.find({ username: req.session.username }).then((result) => {
+    const householdMember = mongoose.model(
+      "household_" + result[0].household_name + "_member",
+      householdMemberSchema
+    );
+    householdMember.findOneAndUpdate(
+      { _id: req.params.id },
+      {
+        username: req.body.username,
+        password: hashedPassword,
+        fullname: req.body.fullname,
+        img: path,
+      }
+    );
+
+    const user = new User({
+      username: req.body.username,
+      password: hashedPassword,
+      household_name: result[0].household_name,
+    });
+
+    user.save();
+    res.redirect("/log-in");
+  });
+};
+
+const addChore = (req, res) => {
+  const isLoggedIn = req.session.isLoggedIn;
+
+  if (isLoggedIn) {
+    res.render("addChore")
+  } else {
+    res.redirect("/log-in");
+  }
+};
+
 module.exports = {
   home,
   createHousehold,
   createHouseholdPost,
+  joinLink,
+  joinLinkPost,
+  addChore,
 };
