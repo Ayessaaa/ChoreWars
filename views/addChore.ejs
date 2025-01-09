@@ -204,7 +204,7 @@
       >
         <div
           title="create"
-          class="bg-slate-900/80 mx-auto py-2.5 rounded-[calc(1.5rem-1px)] px-8 gap-3 items-center flex text-xl font-semibold text-yellow-500 group-hover:bg-slate-900/70 transition-all group-hover:scale-105 group-active:bg-slate-900/60 group-active:text-yellow-500/80"
+          class="capitalize bg-slate-900/80 mx-auto py-2.5 rounded-[calc(1.5rem-1px)] px-8 gap-3 items-center flex text-xl font-semibold text-yellow-500 group-hover:bg-slate-900/70 transition-all group-hover:scale-105 group-active:bg-slate-900/60 group-active:text-yellow-500/80"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -217,12 +217,12 @@
               d="m5.984,20.322c.118.82-.452,1.58-1.271,1.697-.664.096-1.232.516-1.521,1.124-.257.54-.795.856-1.356.856-.216,0-.435-.046-.643-.145-.748-.355-1.066-1.25-.712-1.999.722-1.519,2.145-2.568,3.806-2.806.816-.121,1.58.451,1.697,1.271Zm-1.484-9.322c-1.657,0-3,1.343-3,3s1.343,3,3,3,3-1.343,3-3-1.343-3-3-3Zm15.213,8.051c-.818-.119-1.581.451-1.697,1.271-.118.82.452,1.58,1.271,1.697.664.096,1.232.516,1.521,1.124.257.54.795.856,1.356.856.216,0,.435-.046.643-.145.748-.355,1.066-1.25.712-1.999-.722-1.519-2.145-2.568-3.806-2.806Zm2.787-5.051c0-1.657-1.343-3-3-3s-3,1.343-3,3,1.343,3,3,3,3-1.343,3-3Zm-7.5-3c0-1.657-1.343-3-3-3s-3,1.343-3,3,1.343,3,3,3,3-1.343,3-3Zm-3,5c-2.757,0-5,2.243-5,5v1.5c0,.828.672,1.5,1.5,1.5s1.5-.672,1.5-1.5v-1.5c0-1.103.897-2,2-2s2,.897,2,2v1.5c0,.828.672,1.5,1.5,1.5s1.5-.672,1.5-1.5v-1.5c0-2.757-2.243-5-5-5Zm11.339-9.65L15.527,1.079c-2.142-1.444-4.911-1.446-7.055,0L.661,6.35c-.687.463-.868,1.396-.404,2.082.463.687,1.397.868,2.082.404l7.812-5.271c1.123-.759,2.576-.757,3.699,0l7.812,5.271c.257.174.549.257.838.257.481,0,.955-.231,1.244-.661.464-.687.282-1.619-.404-2.082Z"
             />
           </svg>
-          Smith Household
+          <%= household_name %> Household
         </div>
       </div>
 
       <div class="flex flex-col transition-all lg:flex-row w-fit mx-auto gap-5">
-        <div class="mx-auto mt-8">
+        <form method="POST" class="mx-auto mt-8" action="/add-chore">
           <div class="flex flex-col w-fit items-center mx-auto gap-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -273,6 +273,7 @@
                     >Chore Name</label
                   >
                   <input
+                    required
                     type="text"
                     name="chore"
                     id="chore"
@@ -281,13 +282,14 @@
                   />
 
                   <label
-                    for="countries"
+                    for="frequency"
                     class="block mb-1 text-sm font-normal text-red-500/80 text-left mt-3"
                     >Frequency</label
                   >
                   <select
-                    id="countries"
-                    class="*:text-sm *:font-medium *:bg-slate-900 bg-red-500/10 border-red-500/50 border px-3  py-0.5 rounded-md placeholder:text-red-400/50 focus:bg-red-500/20 active:bg-red-500/30 text-red-50 outline-0 focus:ring-2 focus:ring-red-500/20"
+                    id="frequency"
+                    name="frequency"
+                    class="*:text-sm *:font-medium *:bg-slate-900 bg-red-500/10 border-red-500/50 border px-3 py-0.5 rounded-md placeholder:text-red-400/50 focus:bg-red-500/20 active:bg-red-500/30 text-red-50 outline-0 focus:ring-2 focus:ring-red-500/20"
                   >
                     <option value="daily">Daily</option>
                     <option value="sunday">Every Sunday</option>
@@ -305,6 +307,7 @@
                     >Chore Points</label
                   >
                   <input
+                    required
                     type="number"
                     name="points"
                     id="points"
@@ -320,6 +323,7 @@
                       Chore Distribution Type
                     </p>
                     <input
+                      required
                       type="radio"
                       id="individual"
                       name="chore_type"
@@ -353,86 +357,41 @@
                     Chore Participant/s
                   </p>
                   <ul class="w-full gap-1 flex flex-wrap mb-3">
+                    <% for (let i = 0; i < members.length; i++) { const element
+                    = members[i];%>
+
                     <li>
                       <input
                         type="checkbox"
-                        id="user1-option"
+                        id="<%= element.username %>-option"
                         value=""
                         class="hidden peer"
-                        required=""
+                        name="<%= element.username %>-option"
                       />
                       <label
-                        for="user1-option"
-                        class="inline-flex items-center justify-between w-full py-2 px-5 text-gray-500 hover:border-blue-500/40 bg-slate-700/20 border border-slate-600 rounded-lg cursor-pointer peer-checked:bg-blue-500/30 peer-checked:border-blue-600 hover:text-blue-500/80 hover:shadow-md hover:shadow-blue-500/30 peer-checked:text-slate-300 hover:bg-blue-500/20 transition-all"
+                        for="<%= element.username %>-option"
+                        class="inline-flex items-center justify-between w-full py-2 px-3 text-gray-500 hover:border-blue-500/40 bg-slate-700/20 border border-slate-600 rounded-lg cursor-pointer peer-checked:bg-blue-500/30 peer-checked:border-blue-600 hover:text-blue-500/80 hover:shadow-md hover:shadow-blue-500/30 peer-checked:text-slate-300 hover:bg-blue-500/20 transition-all"
                       >
                         <div class="flex gap-3">
                           <img
-                            src="imgs/pfp.jpg"
+                            src="<%= element.img %>"
                             class="rounded-full w-10 h-10"
                             alt=""
                           />
 
                           <div>
-                            <p class="w-full text- font-semibold">User1</p>
-                            <p class="w-full text-xs -mt-1">User1 Smith</p>
+                            <p class="w-full text- font-semibold">
+                              <%= element.username %>
+                            </p>
+                            <p class="w-full text-xs -mt-1">
+                              <%= element.fullname %>
+                            </p>
                           </div>
                         </div>
                       </label>
                     </li>
 
-                    <li>
-                      <input
-                        type="checkbox"
-                        id="user2-option"
-                        value=""
-                        class="hidden peer"
-                        required=""
-                      />
-                      <label
-                        for="user2-option"
-                        class="inline-flex items-center justify-between w-full py-2 px-5 text-gray-500 hover:border-blue-500/40 bg-slate-700/20 border border-slate-600 rounded-lg cursor-pointer peer-checked:bg-blue-500/30 peer-checked:border-blue-600 hover:text-blue-500/80 hover:shadow-md hover:shadow-blue-500/30 peer-checked:text-slate-300 hover:bg-blue-500/20 transition-all"
-                      >
-                        <div class="flex gap-3">
-                          <img
-                            src="imgs/pfp.jpg"
-                            class="rounded-full w-10 h-10"
-                            alt=""
-                          />
-
-                          <div>
-                            <p class="w-full text- font-semibold">User2</p>
-                            <p class="w-full text-xs -mt-1">User2 Smith</p>
-                          </div>
-                        </div>
-                      </label>
-                    </li>
-
-                    <li>
-                      <input
-                        type="checkbox"
-                        id="user3-option"
-                        value=""
-                        class="hidden peer"
-                        required=""
-                      />
-                      <label
-                        for="user3-option"
-                        class="inline-flex items-center justify-between w-full py-2 px-5 text-gray-500 hover:border-blue-500/40 bg-slate-700/20 border border-slate-600 rounded-lg cursor-pointer peer-checked:bg-blue-500/30 peer-checked:border-blue-600 hover:text-blue-500/80 hover:shadow-md hover:shadow-blue-500/30 peer-checked:text-slate-300 hover:bg-blue-500/20 transition-all"
-                      >
-                        <div class="flex gap-3">
-                          <img
-                            src="imgs/pfp.jpg"
-                            class="rounded-full w-10 h-10"
-                            alt=""
-                          />
-
-                          <div>
-                            <p class="w-full text- font-semibold">User3</p>
-                            <p class="w-full text-xs -mt-1">User3 Smith</p>
-                          </div>
-                        </div>
-                      </label>
-                    </li>
+                    <%} %>
                   </ul>
                 </div>
               </div>
@@ -441,6 +400,7 @@
 
           <div class="mx-auto w-fit">
             <button
+              type="submit"
               class="w-fit rounded-3xl p-px bg-gradient-to-b from-red-500 to-red-500/10 mt-10 mx-auto group z-20"
             >
               <div
@@ -463,7 +423,7 @@
               </div>
             </button>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   </body>

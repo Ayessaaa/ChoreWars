@@ -23,20 +23,19 @@ const signUpError = (req, res) => {
 
 const authSignUp = async (req, res) => {
   const { username, password } = req.body;
-  console.log(username, password);
   try {
-    const result = await User.find({ username: username });
+    const result = await User.find({ username: username.toLowerCase() });
     if (result.length == 0) {
       let hashedPassword = await bcrypt.hash(password, 8);
       const newUser = new User({
-        username: username,
+        username: username.toLowerCase(),
         password: hashedPassword,
         admin: true
       });
 
       await newUser.save();
       req.session.isLoggedIn = true;
-      req.session.username = username;
+      req.session.username = username.toLowerCase();
 
       res.redirect("/home");
     } else {
@@ -60,7 +59,7 @@ const authLogIn = async (req, res) => {
   const { username, password } = req.body;
   console.log(username, password);
   try {
-    const result = await User.find({ username: username });
+    const result = await User.find({ username: username.toLowerCase() });
     if (result.length == 0) {
       res.redirect("/log-in/acc-not-exists");
     } else {

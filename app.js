@@ -79,3 +79,4 @@ app.get("/join-link/:id", siteController.joinLink)
 app.post("/join-link/:id", upload.single('image'), siteController.joinLinkPost)
 
 app.get("/add-chore", siteController.addChore)
+app.post("/add-chore", siteController.addChorePost)

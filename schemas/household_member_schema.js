@@ -10,7 +10,7 @@ const householdMemberSchema = new Schema(
     points: { type: Number, require: false },
     chores: { type: Array, require: false },
     choresID: { type: Array, require: false },
-    img: { type: String, require: false },
+    img: { type: String, require: false, default:"https://fl-1.cdn.flockler.com/embed/no-image.svg" },
     household: { type: String, require: true },
   },
   { timestamps: true }

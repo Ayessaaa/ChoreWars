@@ -12,6 +12,8 @@ const householdMemberSchema = require("../schemas/household_member_schema");
 const householdChoreSchema = require("../schemas/household_chore_schema");
 const householdFeedSchema = require("../schemas/household_feed_schema");
 
+const HouseholdChore = mongoose.model("HouseholdChore", householdChoreSchema);
+
 const home = (req, res) => {
   const isLoggedIn = req.session.isLoggedIn;
 
@@ -92,7 +94,7 @@ const createHouseholdPost = async (req, res) => {
 
     for (let i = 1; i < Object.values(req.body).length; i += 2) {
       const member = new householdMember({
-        username: Object.values(req.body)[i],
+        username: Object.values(req.body)[i].toLowerCase(),
         fullname: Object.values(req.body)[i + 1],
         household: req.body.household,
       });
@@ -136,23 +138,23 @@ const joinLinkPost = async (req, res) => {
   const isLoggedIn = req.session.isLoggedIn;
   let hashedPassword = await bcrypt.hash(req.body.password, 8);
 
-  var path = "/img/no-img.svg";
+  var path = "https://fl-1.cdn.flockler.com/embed/no-image.svg";
 
   try {
     path = req.file.path;
   } catch {
-    path = "/img/no-img.svg";
+    path = "https://fl-1.cdn.flockler.com/embed/no-image.svg";
   }
 
-  User.find({ username: req.session.username }).then((result) => {
+  User.find({ username: req.session.username }).then(async (result) => {
     const householdMember = mongoose.model(
       "household_" + result[0].household_name + "_member",
       householdMemberSchema
     );
-    householdMember.findOneAndUpdate(
+    await householdMember.findOneAndUpdate(
       { _id: req.params.id },
       {
-        username: req.body.username,
+        username: req.body.username.toLowerCase(),
         password: hashedPassword,
         fullname: req.body.fullname,
         img: path,
@@ -160,7 +162,7 @@ const joinLinkPost = async (req, res) => {
     );
 
     const user = new User({
-      username: req.body.username,
+      username: req.body.username.toLowerCase(),
       password: hashedPassword,
       household_name: result[0].household_name,
     });
@@ -174,7 +176,62 @@ const addChore = (req, res) => {
   const isLoggedIn = req.session.isLoggedIn;
 
   if (isLoggedIn) {
-    res.render("addChore")
+    User.find({ username: req.session.username }).then((result) => {
+      const householdMember = mongoose.model(
+        "household_" + result[0].household_name + "_member",
+        householdMemberSchema
+      );
+      householdMember
+        .find({})
+        .then((resultMember) => {
+          res.render("addChore", {
+            household_name: result[0].household_name,
+            members: resultMember,
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    });
+  } else {
+    res.redirect("/log-in");
+  }
+};
+
+const addChorePost = (req, res) => {
+  const isLoggedIn = req.session.isLoggedIn;
+
+  if (isLoggedIn) {
+    User.find({ username: req.session.username }).then((result) => {
+
+      const householdChore = mongoose.model(
+        "household_" + result[0].household_name + "_chore",
+        householdChoreSchema
+      );
+
+      console.log(req.body);
+
+      let participantsArray = []
+
+      for (let i = 4; i < Object.keys(req.body).length; i++) {
+        const element = Object.keys(req.body)[i];
+        participantsArray.push(element.split("-")[0])
+      }
+
+      const chore =  new householdChore({
+        chore_name: req.body.chore,
+        frequency: req.body.frequency,
+        points: req.body.points,
+        type: req.body.chore_type,
+        participants: participantsArray
+      })
+
+      chore.save()
+
+
+      res.redirect("/home")
+
+    });
   } else {
     res.redirect("/log-in");
   }
@@ -187,4 +244,5 @@ module.exports = {
   joinLink,
   joinLinkPost,
   addChore,
+  addChorePost,
 };
