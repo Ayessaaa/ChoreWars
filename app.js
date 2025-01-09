@@ -71,3 +71,6 @@ app.get("/", (req, res)=>{
 })
 
 app.get("/home", siteController.home)
+
+app.get("/create-household", siteController.createHousehold)
+app.post("/create-household", siteController.createHouseholdPost)

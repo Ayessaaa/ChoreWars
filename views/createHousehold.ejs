@@ -198,7 +198,7 @@
       </button>
     </div>
 
-    <div class="lg:w-1/2 min-w-[500px] lg:min-w-[900px] mx-auto mt-10 z-10">
+    <form class="lg:w-1/2 min-w-[500px] lg:min-w-[900px] mx-auto mt-10 z-10" method="POST" >
       <p class="font-semibold text-slate-300 text-2xl lg:text-left text-center">
         Welcome Head,
         <span
@@ -238,6 +238,7 @@
               >Household Name</label
             >
             <input
+             required
               type="text"
               name="household"
               id="household"
@@ -334,6 +335,7 @@
         class="w-fit rounded-3xl p-px bg-gradient-to-b from-yellow-500 to-yellow-500/10 mt-10 mx-auto group z-20"
       >
         <button
+        type="submit"
           title="create"
           class="bg-slate-900/80 mx-auto py-2.5 rounded-[calc(1.5rem-1px)] px-8 gap-3 items-center flex text-xl font-semibold text-yellow-500 group-hover:bg-slate-900/70 transition-all group-hover:scale-105 group-active:bg-slate-900/60 group-active:text-yellow-500/80"
         >
@@ -351,6 +353,6 @@
           Create Household
         </button>
       </div>
-    </div>
+    </form>
   </body>
 </html>
