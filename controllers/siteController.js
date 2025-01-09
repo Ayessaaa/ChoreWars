@@ -22,7 +22,16 @@ const home = (req, res) => {
         if (result[0].household_name === undefined) {
           res.redirect("/create-household");
         } else {
-          res.render("admin");
+          const householdMember = mongoose.model(
+            "household_" + result[0].household_name + "_member",
+            householdMemberSchema
+          );
+          householdMember.find()
+          .then((resultMember) => {
+            res.render("admin", {member: resultMember});
+          })
+          .catch((err)=>{console.log(err)});
+          
         }
       } else {
         res.render("home");
@@ -47,7 +56,6 @@ const createHouseholdPost = async (req, res) => {
   const isLoggedIn = req.session.isLoggedIn;
 
   if (isLoggedIn) {
-    
     const householdMember = mongoose.model(
       "household_" + req.body.household + "_member",
       householdMemberSchema
@@ -77,14 +85,13 @@ const createHouseholdPost = async (req, res) => {
         console.log(err);
       });
 
-    for (let i = 1; i < Object.values(req.body).length; i+=2) {
-
+    for (let i = 1; i < Object.values(req.body).length; i += 2) {
       const member = new householdMember({
         username: Object.values(req.body)[i],
-        fullname: Object.values(req.body)[i+1],
+        fullname: Object.values(req.body)[i + 1],
         household: req.body.household,
       });
-      
+
       await member.save();
     }
 
