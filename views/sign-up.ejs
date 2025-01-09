@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="./output.css" rel="stylesheet" />
+    <link href="/output.css" rel="stylesheet" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -32,7 +32,7 @@
       class="w-[600px] h-96 rounded-full -bottom-32 bg-red-700/10 blur-3xl fixed right-96"
     ></div>
 
-    <div class="flex gap-5 mx-auto w-fit mt-10">
+    <div class="flex gap-5 mx-auto w-fit mt-10 mb-20">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         id="Layer_1"
@@ -75,8 +75,37 @@
       </div>
     </div>
 
+    <% if (error){ %>
+
+      <div
+        class="w-fit rounded-2xl mx-auto p-px bg-gradient-to-b from-orange-500 to-orange-500/10 -mt-5"
+      >
+        <div
+          class="bg-slate-900/80 mx-auto p-3 rounded-[calc(1rem-1px)] w-96 flex items-center justify-center gap-5"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            id="Layer_1"
+            data-name="Layer 1"
+            viewBox="0 0 24 24"
+            class="size-7 fill-orange-500 drop-shadow-[0_5px_5px_rgba(249,115,22,.3)] -ml-5"
+          >
+            <path
+              d="M13.5,10.5v5c0,.83-.67,1.5-1.5,1.5s-1.5-.67-1.5-1.5v-5c0-.83,.67-1.5,1.5-1.5s1.5,.67,1.5,1.5Zm-1.5,8.5c-.83,0-1.5,.67-1.5,1.5s.67,1.5,1.5,1.5,1.5-.67,1.5-1.5-.67-1.5-1.5-1.5Zm11.05-4.19L15.31,2.73c-.75-1.08-1.99-1.73-3.31-1.73s-2.56,.65-3.34,1.78L.99,14.76c-1.09,1.56-1.29,3.45-.52,4.92,.77,1.48,2.34,2.32,4.32,2.32h1.72c.83,0,1.5-.67,1.5-1.5s-.67-1.5-1.5-1.5h-1.72c-.48,0-1.33-.09-1.66-.71-.25-.48-.13-1.17,.35-1.87L11.15,4.44c.28-.4,.69-.44,.85-.44s.57,.04,.82,.39l7.74,12.08c.45,.64,.57,1.34,.32,1.82-.32,.62-1.18,.71-1.66,.71h-1.72c-.83,0-1.5,.67-1.5,1.5s.67,1.5,1.5,1.5h1.72c1.97,0,3.55-.85,4.32-2.32,.77-1.47,.57-3.36-.48-4.87Z"
+            />
+          </svg>
+          <p
+            class="text-xl font-medium text-orange-500/90 drop-shadow-[0_5px_5px_rgba(249,115,22,.3)]"
+          >
+            Username Taken!
+          </p>
+        </div>
+      </div>
+
+      <% } %>
+
     <div
-      class="w-fit rounded-3xl mx-auto p-px bg-gradient-to-b from-sky-500 to-sky-500/10 mt-20"
+      class="w-fit rounded-3xl mx-auto p-px bg-gradient-to-b from-sky-500 to-sky-500/10 mt-5"
     >
       <div class="bg-slate-900/80 mx-auto p-5 rounded-[calc(1.5rem-1px)] w-96">
         <svg
@@ -93,25 +122,33 @@
             d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
           />
         </svg>
-        <p class="text-sky-100/90 font-semibold text-2xl text-center">Sign Up</p>
+        <p class="text-sky-100/90 font-semibold text-2xl text-center">
+          Sign Up
+        </p>
         <p class="text-sky-400/90 text-sm text-center">Create an Account</p>
 
-        <div class="flex flex-col px-5 mt-5">
+        <form
+          class="flex flex-col px-5 mt-5"
+          method="POST"
+          action="/auth/sign-up"
+        >
           <label for="username" class="text-sm font-normal text-sky-500/80"
             >Username</label
           >
           <input
+            required
             type="text"
             name="username"
             id="username"
             placeholder="Username"
-            class="bg-sky-500/10  border-sky-500/50 border px-3 py-1 rounded-md placeholder:text-sky-400/50 focus:bg-sky-500/20 active:bg-sky-500/30 text-sky-50 outline-0 focus:ring-2 focus:ring-sky-500/20"
+            class="bg-sky-500/10 border-sky-500/50 border px-3 py-1 rounded-md placeholder:text-sky-400/50 focus:bg-sky-500/20 active:bg-sky-500/30 text-sky-50 outline-0 focus:ring-2 focus:ring-sky-500/20"
           />
 
           <label for="password" class="text-sm font-normal text-sky-500/80 mt-2"
             >Password</label
           >
           <input
+            required
             type="password"
             name="password"
             id="password"
@@ -121,17 +158,21 @@
 
           <div class="w-fit mx-auto mb-2">
             <button
+              type="submit"
               class="hover:bg-sky-600/80 transition-all active:bg-sky-500/50 active:text-sky-500 bg-sky-600/70 hover:scale-105 px-5 py-1 text-xl text-white font-semibold rounded-lg mt-10 hover:shadow-lg hover:shadow-sky-500/20"
             >
               Sign Up
             </button>
           </div>
-
-          
-        </div>
+        </form>
       </div>
     </div>
 
-    <div><p class="text-sky-400/90 text-sm text-center mt-7 ">Already have an Account? <a href="log-in.html" class="underline text-sky-600">Log In Here</a></p></div>
+    <div>
+      <p class="text-sky-400/90 text-sm text-center mt-7">
+        Already have an Account?
+        <a href="/log-in" class="underline text-sky-600">Log In Here</a>
+      </p>
+    </div>
   </body>
 </html>

@@ -15,6 +15,9 @@ const upload = multer({ storage });
 const { render } = require("ejs");
 dotenv.config({ path: ".env" });
 
+const authController = require("./controllers/authController");
+const siteController = require("./controllers/siteController");
+
 const app = express();
 
 app.set("view engine", "ejs");
@@ -41,6 +44,30 @@ app.use(
   })
 );
 
-app.get("/sign-up", (req, res)=>{
-    res.render("sign-up")
+app.get("/sign-up", authController.signUp);
+
+app.get("/sign-up/:err", authController.signUpError);
+
+app.get("/log-in", authController.logIn);
+
+app.get("/log-in/:err", authController.logInError);
+
+app.post("/auth/sign-up", authController.authSignUp);
+
+app.post("/auth/log-in", authController.authLogIn);
+
+app.get("/logout", (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.redirect("/log-in");
+    }
+  });
+});
+
+app.get("/", (req, res)=>{
+    res.redirect("home")
 })
+
+app.get("/home", siteController.home)

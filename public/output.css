@@ -635,6 +635,10 @@ video {
   margin-bottom: 0.75rem;
 }
 
+.ml-5 {
+  margin-left: 1.25rem;
+}
+
 .mt-1 {
   margin-top: 0.25rem;
 }
@@ -677,6 +681,18 @@ video {
 
 .mt-auto {
   margin-top: auto;
+}
+
+.-ml-5 {
+  margin-left: -1.25rem;
+}
+
+.mb-20 {
+  margin-bottom: 5rem;
+}
+
+.-mt-5 {
+  margin-top: -1.25rem;
 }
 
 .block {
@@ -884,10 +900,6 @@ video {
   gap: 1.25rem;
 }
 
-.gap-10 {
-  gap: 2.5rem;
-}
-
 .rounded-3xl {
   border-radius: 1.5rem;
 }
@@ -912,6 +924,14 @@ video {
   border-radius: 0.75rem;
 }
 
+.rounded-2xl {
+  border-radius: 1rem;
+}
+
+.rounded-\[calc\(1rem-1px\)\] {
+  border-radius: calc(1rem - 1px);
+}
+
 .border {
   border-width: 1px;
 }
@@ -930,10 +950,6 @@ video {
 
 .border-sky-500\/50 {
   border-color: rgb(14 165 233 / 0.5);
-}
-
-.border-slate-500\/50 {
-  border-color: rgb(100 116 139 / 0.5);
 }
 
 .border-slate-600 {
@@ -1175,6 +1191,10 @@ video {
 
 .p-px {
   padding: 1px;
+}
+
+.p-3 {
+  padding: 0.75rem;
 }
 
 .px-14 {
@@ -1456,6 +1476,15 @@ video {
   color: rgb(234 179 8 / 0.8);
 }
 
+.text-orange-500 {
+  --tw-text-opacity: 1;
+  color: rgb(249 115 22 / var(--tw-text-opacity, 1));
+}
+
+.text-orange-500\/90 {
+  color: rgb(249 115 22 / 0.9);
+}
+
 .underline {
   text-decoration-line: underline;
 }
@@ -1589,6 +1618,11 @@ video {
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 
+.drop-shadow-\[0_5px_5px_rgba\(249\2c 115\2c 22\2c \.5\)\] {
+  --tw-drop-shadow: drop-shadow(0 5px 5px rgba(249,115,22,.5));
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+
 .drop-shadow-\[0_5px_5px_rgba\(255\2c 0\2c 0\2c \.2\)\] {
   --tw-drop-shadow: drop-shadow(0 5px 5px rgba(255,0,0,.2));
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
@@ -1599,23 +1633,8 @@ video {
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 
-.drop-shadow-\[0_5px_10px_rgba\(14\2c 165\2c 233\2c \.5\)\] {
-  --tw-drop-shadow: drop-shadow(0 5px 10px rgba(14,165,233,.5));
-  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
-}
-
-.drop-shadow-\[0_5px_12px_rgba\(14\2c 165\2c 233\2c \.5\)\] {
-  --tw-drop-shadow: drop-shadow(0 5px 12px rgba(14,165,233,.5));
-  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
-}
-
-.drop-shadow-\[0_5px_12px_rgba\(14\2c 165\2c 233\2c \.6\)\] {
-  --tw-drop-shadow: drop-shadow(0 5px 12px rgba(14,165,233,.6));
-  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
-}
-
-.drop-shadow-\[0_5px_15px_rgba\(14\2c 165\2c 233\2c \.6\)\] {
-  --tw-drop-shadow: drop-shadow(0 5px 15px rgba(14,165,233,.6));
+.drop-shadow-\[0_5px_5px_rgba\(249\2c 115\2c 22\2c \.3\)\] {
+  --tw-drop-shadow: drop-shadow(0 5px 5px rgba(249,115,22,.3));
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 
@@ -1878,11 +1897,6 @@ video {
   color: rgb(234 179 8 / var(--tw-text-opacity, 1));
 }
 
-.active\:text-yellow-600:active {
-  --tw-text-opacity: 1;
-  color: rgb(202 138 4 / var(--tw-text-opacity, 1));
-}
-
 .file\:active\:bg-blue-500\/20:active::file-selector-button {
   background-color: rgb(59 130 246 / 0.2);
 }
@@ -2032,11 +2046,6 @@ video {
 
 .group:active .group-active\:text-yellow-500\/80 {
   color: rgb(234 179 8 / 0.8);
-}
-
-.group:active .group-active\:text-yellow-500 {
-  --tw-text-opacity: 1;
-  color: rgb(234 179 8 / var(--tw-text-opacity, 1));
 }
 
 .peer\/individual:checked ~ .peer-checked\/individual\:border-red-500\/60 {
