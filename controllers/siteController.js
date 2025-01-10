@@ -11,8 +11,86 @@ const User = require("../models/user");
 const householdMemberSchema = require("../schemas/household_member_schema");
 const householdChoreSchema = require("../schemas/household_chore_schema");
 const householdFeedSchema = require("../schemas/household_feed_schema");
+const choresTodaySchema = require("../schemas/chores_today_schema");
 
-const HouseholdChore = mongoose.model("HouseholdChore", householdChoreSchema);
+const updateChoresToday = (req, res) => {
+  const isLoggedIn = req.session.isLoggedIn;
+  console.log("page")
+
+  if (isLoggedIn) {
+    User.find({ username: req.session.username }).then((result) => {
+      if (!result[0].admin) {
+        console.log("not admin")
+        const householdMember = mongoose.model(
+          "household_" + result[0].household_name + "_member",
+          householdMemberSchema
+        );
+
+        const householdChore = mongoose.model(
+          "household_" + result[0].household_name + "_chore",
+          householdChoreSchema
+        );
+
+        const choresToday = mongoose.model(
+          "today_" +
+            result[0].household_name +
+            "_" +
+            req.session.username +
+            "_chore",
+          choresTodaySchema
+        );
+
+        householdMember
+          .find({ username: req.session.username })
+          .then((resultMember) => {
+            console.log(resultMember)
+            // for every chore the member has
+            for (let i = 0; i < resultMember[0].choresID.length; i++) {
+              const choreID = resultMember[0].choresID[i];
+              console.log("look");
+              // look through the library of chores
+              householdChore.find({_id : choreID}).then((resultChore) => {
+                console.log(resultChore);
+                // check if the type is daily
+                if (resultChore[0].frequency === "daily") {
+                  // check if its today chores already created
+                  console.log("daily");
+                  choresToday
+                    .find({
+                      choreID: choreID,
+                      date: new Date().toISOString().split("T")[0],
+                    })
+                    .then((resultChoreToday) => {
+                      console.log(resultChoreToday)
+                      if (resultChoreToday.length <= 0) {
+                        console.log("less than 0");
+                        const createChoreToday = new choresToday({
+                          username: req.session.username,
+                          chore_name: resultChore[0].chore_name,
+                          choreID: resultChore[0]._id,
+                          type: resultChore[0].type,
+                          date: new Date().toISOString().split("T")[0],
+                          points: resultChore[0].points,
+                          frequency: resultChore[0].frequency,
+                          done: false,
+                        });
+
+                        createChoreToday.save();
+                      }
+                    });
+                }
+              });
+            }
+          }).catch((err)=>console.log(err));
+      } else {
+        console.log("admin")
+      }
+
+    });
+  } else {
+    res.redirect("/log-in");
+  }
+};
 
 const home = (req, res) => {
   const isLoggedIn = req.session.isLoggedIn;
@@ -50,7 +128,7 @@ const home = (req, res) => {
             });
         }
       } else {
-        res.render("home");
+        res.render("home", { username: req.session.username });
       }
     });
   } else {
@@ -177,6 +255,17 @@ const joinLinkPost = async (req, res) => {
     });
 
     user.save();
+
+    const choresToday = mongoose.model(
+      "today_" +
+        result[0].household_name +
+        "_" +
+        req.body.username.toLowerCase() +
+        "_chore",
+      choresTodaySchema
+    );
+    choresToday.createCollection().catch((err) => console.log(err));
+
     res.redirect("/log-in");
   });
 };
@@ -302,12 +391,12 @@ const addMemberPost = (req, res) => {
 
       const member = new householdMember({
         username: req.body.username,
-        fullname: req.body.fullname
-      })
+        fullname: req.body.fullname,
+      });
 
-      member.save()
+      member.save();
 
-      res.redirect("/home")
+      res.redirect("/home");
     });
   } else {
     res.redirect("/log-in");
@@ -323,5 +412,6 @@ module.exports = {
   addChore,
   addChorePost,
   addMember,
-  addMemberPost
+  addMemberPost,
+  updateChoresToday,
 };

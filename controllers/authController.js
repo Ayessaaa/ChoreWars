@@ -72,7 +72,7 @@ const authLogIn = async (req, res) => {
         if (result) {
           req.session.isLoggedIn = true;
           req.session.username = username;
-          res.redirect("/home");
+          res.redirect("/update_chores_today");
         } else {
           res.redirect("/log-in/wrong-password");
         }
