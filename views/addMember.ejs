@@ -199,18 +199,6 @@
     </div>
 
     <div class="lg:w-1/2 lg:min-w-[900px] mx-auto mt-10 z-10">
-      <p class="font-semibold text-slate-300 text-2xl lg:text-left text-center">
-        Welcome Head,
-        <span
-          class="font-bold text-3xl bg-gradient-to-r text-transparent bg-clip-text from-blue-500 to-sky-500"
-          >User</span
-        >
-      </p>
-      <p class="text-slate-400 font-medium lg:text-left text-center">
-        Ready to monitor the
-        <span class="text-red-500 underline underline-offset-2">chores?</span>
-      </p>
-
       <div
         class="w-fit rounded-3xl p-px bg-gradient-to-b from-yellow-500 to-yellow-500/10 mt-10 mx-auto group z-20"
       >
@@ -234,7 +222,7 @@
       </div>
 
       <div class="flex flex-col transition-all lg:flex-row w-fit mx-auto gap-5">
-        <div class="mx-auto mt-8">
+        <form method="POST" class="mx-auto mt-8">
           <div class="flex flex-col w-fit items-center mx-auto gap-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -254,89 +242,50 @@
                 />
               </g>
             </svg>
-            <p class="text-slate-300 font-medium text-lg">Family Members</p>
+            <p class="text-slate-300 font-medium text-lg mt-1">Add A Member</p>
           </div>
 
-          <div class="flex flex-col mt-3 w-96 mx-auto gap-1.5">
-            <% for (let i = 0; i < members.length; i++) { const member =
-            members[i]; %>
-
-            <div class="flex gap-1">
+          <div class="flex flex-col mt-3 w-96 mx-auto">
+            <div class="flex gap-1 w-full">
               <div
-                class="border border-sky-500/50 rounded-xl py-2 px-5 bg-sky-600/10 flex items-center gap-5 flex-1"
+                class="border border-sky-500/50 rounded-xl py-3 px-5 bg-sky-600/10 flex flex-col items-center w-full"
               >
-                <img src="<%= member.img %>" alt="" class="w-14 rounded-full" />
-
-                <div class="flex flex-col flex-1">
-                  <p
-                    class="text-lg font-semibold text-slate-200 flex items-center gap-1.5"
+                <div class="mt-5 flex flex-col w-full px-5 mb-3">
+                  <label
+                    for="username"
+                    class="text-sm font-normal text-sky-500/80"
+                    >Username</label
                   >
-                    <%= member.username %> <% if (member.password ) { %><svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                      class="size-4 text-yellow-500/90 drop-shadow-[0_10px_15px_rgba(234,179,8,.8)]"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        d="M16.403 12.652a3 3 0 0 0 0-5.304 3 3 0 0 0-3.75-3.751 3 3 0 0 0-5.305 0 3 3 0 0 0-3.751 3.75 3 3 0 0 0 0 5.305 3 3 0 0 0 3.75 3.751 3 3 0 0 0 5.305 0 3 3 0 0 0 3.751-3.75Zm-2.546-4.46a.75.75 0 0 0-1.214-.883l-3.483 4.79-1.88-1.88a.75.75 0 1 0-1.06 1.061l2.5 2.5a.75.75 0 0 0 1.137-.089l4-5.5Z"
-                        clip-rule="evenodd"
-                      />
-                    </svg>
+                  <input
+                    required
+                    type="text"
+                    name="username"
+                    id="username"
+                    placeholder="Username"
+                    class="bg-sky-500/10 border-sky-500/50 border px-3 py-0.5 rounded-md placeholder:text-sky-400/50 focus:bg-sky-500/20 active:bg-sky-500/30 text-sky-50 outline-0 focus:ring-2 focus:ring-sky-500/20"
+                  />
 
-                    <% } %>
-                  </p>
-                  <p class="text-sm font-medium -mt-1 text-slate-400">
-                    <%= member.fullname %>
-                  </p>
+                  <label
+                    for="fullname"
+                    class="text-sm font-normal text-sky-500/80 mt-3"
+                    >Full Name</label
+                  >
+                  <input
+                    required
+                    type="text"
+                    name="fullname"
+                    id="fullname"
+                    placeholder="Full Name"
+                    class="bg-sky-500/10 border-sky-500/50 border px-3 py-0.5 rounded-md placeholder:text-sky-400/50 focus:bg-sky-500/20 active:bg-sky-500/30 text-sky-50 outline-0 focus:ring-2 focus:ring-sky-500/20"
+                  />
                 </div>
-
-                <button
-                  onclick="copyContent('/join-link/<%=member._id%>')"
-                  class="bg-sky-600/20 py-1 h-4/5 px-2 flex items-center rounded-lg hover:scale-105 transition-all group"
-                  title="link"
-                >
-                  <div
-                    class="absolute bg-sky-500/40 text-xs font-medium text-white py-1 px-2 rounded-full -mt-20 -ml-7 group-focus:opacity-100 opacity-0 transition-all w-20"
-                  >
-                    Copied !
-                  </div>
-
-                  <svg
-                    id="Layer_1"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                    data-name="Layer 1"
-                    class="fill-white size-6 group-hover:fill-sky-500/80 transition-all group-hover:drop-shadow-[0_10px_10px_rgba(2,132,199,.4)] group-active:fill-sky-500/60 group-focus:fill-sky-500/90"
-                  >
-                    <path
-                      d="m10.963 17.822c-3.536 3.384-4.873 2.047-5.849 1.069-1.068-1.069-2.397-2.399 1.382-6.183 1.644-1.646 3.019-2.481 4.088-2.481.423 0 1.1.114 2.082 1.097.585.586 1.535.587 2.122.001.586-.585.587-1.535.001-2.122-3.029-3.033-6.393-2.644-10.416 1.384-3.967 3.974-4.419 7.384-1.382 10.425 1.325 1.327 2.716 1.99 4.192 1.99 1.814 0 3.755-1.003 5.854-3.013.599-.573.619-1.522.046-2.121-.574-.599-1.523-.62-2.121-.046z"
-                    />
-                    <path
-                      d="m21.008 2.977c-2.952-2.955-6.237-2.621-10.045 1.021-.599.573-.62 1.522-.047 2.121s1.522.619 2.121.047c3.537-3.383 4.873-2.046 5.849-1.07 1.067 1.07 2.396 2.4-1.382 6.184-1.651 1.654-3.026 2.492-4.086 2.492-.419 0-1.092-.115-2.083-1.108-.586-.587-1.536-.587-2.122-.001-.586.585-.587 1.535-.001 2.122 1.336 1.338 2.712 1.988 4.207 1.988 1.938 0 3.912-1.072 6.209-3.372 3.967-3.973 4.419-7.382 1.382-10.424z"
-                    />
-                  </svg>
-                </button>
               </div>
             </div>
-
-            <% } %>
           </div>
-
-          <script>
-            const copyContent = async (text) => {
-              try {
-                await navigator.clipboard.writeText(text);
-                console.log("Content copied to clipboard");
-              } catch (err) {
-                console.error("Failed to copy: ", err);
-              }
-            };
-          </script>
 
           <div class="mx-auto w-fit">
             <button
-            onclick="window.location.href = '/add-member'"
+              type="submit"
               class="w-fit rounded-3xl p-px bg-gradient-to-b from-blue-500 to-blue-500/10 mt-10 mx-auto group z-20"
             >
               <div
@@ -359,124 +308,7 @@
               </div>
             </button>
           </div>
-        </div>
-
-        <div class="mx-auto mt-8 ">
-          <div class="flex flex-col w-fit items-center mx-auto gap-2 mb-3">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              xmlns:xlink="http://www.w3.org/1999/xlink"
-              version="1.1"
-              id="Capa_1"
-              viewBox="0 0 512.147 512.147"
-              xml:space="preserve"
-              class="size-11 drop-shadow-[0_10px_10px_rgba(255,0,0,.4)] fill-red-500 transition-all"
-            >
-              <g>
-                <path
-                  d="M502.767,23.911c-12.496-12.492-32.752-12.492-45.248,0L355.887,125.543c-40.918-36.768-101.866-40.234-146.688-8.341   c-26.383,19.637-55.603,35.139-86.656,45.973l-38.165,11.179l0,0C22.19,192.571-13.455,257.753,4.763,319.941   c1.385,4.728,3.066,9.363,5.034,13.879c23.216,57.559,65.782,105.217,120.363,134.763c43.034,20.203,90.181,30.107,137.707,28.928   h1.344c16.018,0.005,31.604-5.191,44.416-14.805C380.831,434.44,426.772,362.058,441.839,280.7   c6.679-38.339-5.906-77.513-33.664-104.789l-6.144-5.973l100.8-100.821C515.277,56.608,515.249,36.384,502.767,23.911z    M274.927,431.698c-1.756,1.256-3.88,1.894-6.037,1.813c-22.416-0.007-44.774-2.287-66.731-6.805   c28.563-17.868,53.161-41.399,72.277-69.141l10.539-15.509c10.232-14.41,6.844-34.386-7.566-44.618s-34.386-6.844-44.618,7.566   c-0.248,0.349-0.489,0.703-0.723,1.062l-10.539,15.467c-17.469,25.524-41.125,46.2-68.757,60.096l-22.144,11.115   c-12.434-10.092-23.569-21.686-33.152-34.517c29.594-12.071,56.577-29.746,79.467-52.053c12.442-12.551,12.353-32.812-0.198-45.254   c-12.299-12.191-32.064-12.387-44.602-0.442c-18.767,18.214-41.204,32.215-65.813,41.067c-8.257-28.016,7.762-57.422,35.778-65.678   c0.106-0.031,0.212-0.062,0.318-0.093l38.123-11.2c32.756-10.917,63.804-26.409,92.224-46.016L367.77,310.119   C349.315,358.818,317.048,401.071,274.927,431.698z"
-                />
-              </g>
-            </svg>
-            <p class="text-slate-300 font-medium text-lg mt-1">Chores</p>
-          </div>
-
-          <% for (let i = 0; i < chores.length; i++) { const chore = chores[i];
-          %>
-
-          <div class="flex flex-col mt-1.5 w-96 mx-auto">
-            <div class="flex gap-1">
-              <div
-                class="border border-red-500/50 rounded-xl py-3 px-5 bg-red-600/10 flex items-center gap-5 flex-1"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
-                  version="1.1"
-                  id="Capa_1"
-                  viewBox="0 0 512 512"
-                  xml:space="preserve"
-                  class="size-10 drop-shadow-[0_10px_10px_rgba(255,0,0,.5)] fill-red-500/80 group-hover:fill-red-600 transition-all group-active:fill-red-500"
-                >
-                  <g>
-                    <path
-                      d="M490.667,96c0-17.673-14.327-32-32-32h-80.555C364.632,25.757,328.549,0.13,288,0h-64   c-40.549,0.13-76.632,25.757-90.112,64H53.333c-17.673,0-32,14.327-32,32l0,0c0,17.673,14.327,32,32,32H64v266.667   C64,459.468,116.532,512,181.333,512h149.333C395.468,512,448,459.468,448,394.667V128h10.667   C476.34,128,490.667,113.673,490.667,96z M384,394.667C384,424.122,360.122,448,330.667,448H181.333   C151.878,448,128,424.122,128,394.667V128h256V394.667z"
-                    />
-                    <path
-                      d="M202.667,384c17.673,0,32-14.327,32-32V224c0-17.673-14.327-32-32-32s-32,14.327-32,32v128   C170.667,369.673,184.994,384,202.667,384z"
-                    />
-                    <path
-                      d="M309.333,384c17.673,0,32-14.327,32-32V224c0-17.673-14.327-32-32-32s-32,14.327-32,32v128   C277.333,369.673,291.66,384,309.333,384z"
-                    />
-                  </g>
-                </svg>
-                <div class="flex-1">
-                  <p class="text-slate-200 font-medium capitalize">
-                    <%= chore.chore_name %>
-                  </p>
-                  <p class="text-slate-400 text-xs -mt-1">
-                    Chore of: <% for (let i = 0; i < chore.participants.length; i++) {
-                      const participant = chore.participants[i]; %>
-                      <%= participant %><%= i+1<chore.participants.length ? "," : "" %>
-                      
-                    <% } %>
-                  </p>
-                  <div class="flex gap-1 mt-2 capitalize">
-                    <div
-                      class="bg-red-500/20 rounded-full text-xs font-semibold px-2 w-fit text-red-500"
-                    >
-                      <%= chore.frequency %>
-                    </div>
-
-                    <div
-                      class="bg-red-500/20 rounded-full text-xs font-semibold px-2 w-fit text-red-500"
-                    >
-                      <%= chore.type %>
-                    </div>
-                  </div>
-                </div>
-
-                <div
-                  class="bg-red-600/20 h-5/6 px-2 rounded-lg flex flex-col items-center justify-center"
-                  title="link"
-                >
-                  <p class="text-2xl font-bold text-slate-300"><%= chore.points %></p>
-                  <p class="-mt-2 text-sm text-red-500/50 font-medium">
-                    points
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <%}%>
-
-          <div class="mx-auto w-fit">
-            <button
-              onclick="window.location.href = '/add-chore'"
-              class="w-fit rounded-3xl p-px bg-gradient-to-b from-red-500 to-red-500/10 mt-10 mx-auto group z-20"
-            >
-              <div
-                title="create"
-                class="bg-slate-900/80 mx-auto py-2.5 rounded-[calc(1.5rem-1px)] px-8 gap-3 items-center flex text-xl font-semibold text-red-500 group-hover:bg-slate-900/70 transition-all group-hover:scale-105 group-active:bg-slate-900/60 group-active:text-red-500/80"
-              >
-                <svg
-                  id="Layer_1"
-                  height="512"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                  data-name="Layer 1"
-                  class="size-7 drop-shadow-[0_10px_10px_rgba(255,0,0,.3)] fill-red-500 transition-all group-active:fill-red-500/80"
-                >
-                  <path
-                    d="m12 0a12 12 0 1 0 12 12 12.013 12.013 0 0 0 -12-12zm0 21a9 9 0 1 1 9-9 9.01 9.01 0 0 1 -9 9zm5-9a1.5 1.5 0 0 1 -1.5 1.5h-2v2a1.5 1.5 0 0 1 -3 0v-2h-2a1.5 1.5 0 0 1 0-3h2v-2a1.5 1.5 0 0 1 3 0v2h2a1.5 1.5 0 0 1 1.5 1.5z"
-                  />
-                </svg>
-                Add Chore
-              </div>
-            </button>
-          </div>
-        </div>
+        </form>
       </div>
     </div>
   </body>

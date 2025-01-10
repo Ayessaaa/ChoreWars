@@ -357,34 +357,34 @@
                     Chore Participant/s
                   </p>
                   <ul class="w-full gap-1 flex flex-wrap mb-3">
-                    <% for (let i = 0; i < members.length; i++) { const element
+                    <% for (let i = 0; i < members.length; i++) { const member
                     = members[i];%>
 
                     <li>
                       <input
                         type="checkbox"
-                        id="<%= element.username %>-option"
+                        id="<%= member.username %>-<%= member._id %>"
                         value=""
                         class="hidden peer"
-                        name="<%= element.username %>-option"
+                        name="<%= member.username %>-<%= member._id %>"
                       />
                       <label
-                        for="<%= element.username %>-option"
+                        for="<%= member.username %>-<%= member._id %>"
                         class="inline-flex items-center justify-between w-full py-2 px-3 text-gray-500 hover:border-blue-500/40 bg-slate-700/20 border border-slate-600 rounded-lg cursor-pointer peer-checked:bg-blue-500/30 peer-checked:border-blue-600 hover:text-blue-500/80 hover:shadow-md hover:shadow-blue-500/30 peer-checked:text-slate-300 hover:bg-blue-500/20 transition-all"
                       >
                         <div class="flex gap-3">
                           <img
-                            src="<%= element.img %>"
+                            src="<%= member.img %>"
                             class="rounded-full w-10 h-10"
                             alt=""
                           />
 
                           <div>
                             <p class="w-full text- font-semibold">
-                              <%= element.username %>
+                              <%= member.username %>
                             </p>
                             <p class="w-full text-xs -mt-1">
-                              <%= element.fullname %>
+                              <%= member.fullname %>
                             </p>
                           </div>
                         </div>

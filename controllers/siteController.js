@@ -28,12 +28,21 @@ const home = (req, res) => {
             "household_" + result[0].household_name + "_member",
             householdMemberSchema
           );
+
+          const householdChore = mongoose.model(
+            "household_" + result[0].household_name + "_chore",
+            householdChoreSchema
+          );
+
           householdMember
             .find()
             .then((resultMember) => {
-              res.render("admin", {
-                household_name: result[0].household_name,
-                member: resultMember,
+              householdChore.find().then((resultChore) => {
+                res.render("admin", {
+                  household_name: result[0].household_name,
+                  members: resultMember,
+                  chores: resultChore,
+                });
               });
             })
             .catch((err) => {
@@ -202,8 +211,7 @@ const addChorePost = (req, res) => {
   const isLoggedIn = req.session.isLoggedIn;
 
   if (isLoggedIn) {
-    User.find({ username: req.session.username }).then((result) => {
-
+    User.find({ username: req.session.username }).then(async (result) => {
       const householdChore = mongoose.model(
         "household_" + result[0].household_name + "_chore",
         householdChoreSchema
@@ -211,26 +219,95 @@ const addChorePost = (req, res) => {
 
       console.log(req.body);
 
-      let participantsArray = []
+      let participantsArray = [];
+      let participantsIDs = [];
 
       for (let i = 4; i < Object.keys(req.body).length; i++) {
         const element = Object.keys(req.body)[i];
-        participantsArray.push(element.split("-")[0])
+        participantsArray.push(element.split("-")[0]);
+        participantsIDs.push(element.split("-")[1]);
       }
 
-      const chore =  new householdChore({
+      const chore = new householdChore({
         chore_name: req.body.chore,
         frequency: req.body.frequency,
         points: req.body.points,
         type: req.body.chore_type,
-        participants: participantsArray
+        participants: participantsArray,
+        participantsID: participantsIDs,
+      });
+
+      const choreSave = await chore.save();
+
+      const householdMember = mongoose.model(
+        "household_" + result[0].household_name + "_member",
+        householdMemberSchema
+      );
+
+      for (let i = 4; i < Object.keys(req.body).length; i++) {
+        const element = Object.keys(req.body)[i];
+        participantsArray.push(element.split("-")[0]);
+        participantsIDs.push(element.split("-")[1]);
+
+        const member = await householdMember.findOneAndUpdate(
+          { _id: element.split("-")[1] },
+          {
+            $push: { choresID: choreSave._id },
+          }
+        );
+      }
+
+      res.redirect("/home");
+    });
+  } else {
+    res.redirect("/log-in");
+  }
+};
+
+const addMember = (req, res) => {
+  const isLoggedIn = req.session.isLoggedIn;
+
+  if (isLoggedIn) {
+    User.find({ username: req.session.username }).then((result) => {
+      const householdMember = mongoose.model(
+        "household_" + result[0].household_name + "_member",
+        householdMemberSchema
+      );
+      householdMember
+        .find({})
+        .then((resultMember) => {
+          res.render("addMember", {
+            household_name: result[0].household_name,
+            members: resultMember,
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    });
+  } else {
+    res.redirect("/log-in");
+  }
+};
+
+const addMemberPost = (req, res) => {
+  const isLoggedIn = req.session.isLoggedIn;
+
+  if (isLoggedIn) {
+    User.find({ username: req.session.username }).then((result) => {
+      const householdMember = mongoose.model(
+        "household_" + result[0].household_name + "_member",
+        householdMemberSchema
+      );
+
+      const member = new householdMember({
+        username: req.body.username,
+        fullname: req.body.fullname
       })
 
-      chore.save()
-
+      member.save()
 
       res.redirect("/home")
-
     });
   } else {
     res.redirect("/log-in");
@@ -245,4 +322,6 @@ module.exports = {
   joinLinkPost,
   addChore,
   addChorePost,
+  addMember,
+  addMemberPost
 };
