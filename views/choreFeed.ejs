@@ -205,13 +205,19 @@
           >Chore Feed</span
         >
       </p>
+      <p class="text-slate-300 text-sm font-medium text-center">
+        Proofs of everyone doing their chores!
+      </p>
+
+      <% for (let i = 0; i < feeds.length; i++) { const feed = feeds[i]; %>
+
       <div
         class="w-[450px] rounded-3xl p-px bg-gradient-to-b from-yellow-500 to-yellow-500/10 mt-5 mx-auto"
       >
         <div
           class="bg-slate-900/80 mx-auto px-5 py-5 rounded-[calc(1.5rem-1px)] h-full flex gap-5"
         >
-          <img src="imgs/pfp.jpg" alt="" class="rounded-md w-44" />
+          <img src="<%= feed.img %>" alt="" class="rounded-md w-44" />
           <div class="flex flex-col items-center flex-1">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -234,8 +240,8 @@
                 />
               </g>
             </svg>
-            <p class="font-medium text-slate-200 mt-3">Taking out the trash</p>
-            <p class="text-slate-400 text-sm">By: User</p>
+            <p class="font-medium text-slate-200 mt-3"><%= feed.chore_name %></p>
+            <p class="text-slate-400 text-sm capitalize">By: <%= feed.username %></p>
 
             <div class="flex gap-2 mt-3">
               <div
@@ -253,7 +259,7 @@
                     clip-rule="evenodd"
                   />
                 </svg>
-                <p class="font-medium">8:30 AM</p>
+                <p class="font-medium"><%= feed.time %></p>
               </div>
               <div
                 class="flex items-center bg-yellow-500/10 gap-2 text-xs px-2 py-1 text-yellow-500 drop-shadow-[0_5px_10px_rgba(234,179,8,.5)] rounded-full"
@@ -271,13 +277,13 @@
                   />
                 </svg>
 
-                <p class="font-medium">Dec 12</p>
+                <p class="font-medium"><%= feed.date.toString().split(" ")[1]+" "+feed.date.toString().split(" ")[2] %></p>
               </div>
             </div>
 
             <div class="text-center flex-1 flex">
               <p class="text-xl font-bold text-slate-200 bottom-0 mt-auto">
-                3
+                <%= feed.points %>
                 <span class="text-sm font-medium text-yellow-500/70 -mt-1"
                   >points</span
                 >
@@ -286,6 +292,8 @@
           </div>
         </div>
       </div>
+
+      <% } %>
     </div>
   </body>
 </html>

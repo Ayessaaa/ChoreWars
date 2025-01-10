@@ -182,14 +182,13 @@ const home = (req, res) => {
           choresToday
             .find({ done: false })
             .then((resultChore) => {
-              householdFeed.find().then((resultFeed)=>{
-
+              householdFeed.find().then((resultFeed) => {
                 res.render("home", {
                   username: req.session.username,
                   chores: resultChore,
-                  feeds: resultFeed
+                  feeds: resultFeed,
                 });
-              })
+              });
             })
             .catch((err) => console.log(err));
         });
@@ -523,7 +522,7 @@ const choreDonePost = (req, res) => {
     } catch {
       path = "https://fl-1.cdn.flockler.com/embed/no-image.svg";
     }
-    User.find({ username: req.session.username }).then((result) => {
+    User.find({ username: req.session.username }).then(async (result) => {
       const householdFeed = mongoose.model(
         "household_" + result[0].household_name + "_feed",
         householdFeedSchema
@@ -538,7 +537,12 @@ const choreDonePost = (req, res) => {
         choresTodaySchema
       );
 
-      choresToday.findOneAndUpdate({ _id: req.params.id }, { done: true });
+      await choresToday
+        .findOneAndUpdate({ _id: req.params.id }, { done: true })
+        .then((result) => {})
+        .catch((err) => {
+          console.log(err);
+        });
 
       const today = new Date();
       console.log(today.getHours());
@@ -577,6 +581,25 @@ const choreDonePost = (req, res) => {
   }
 };
 
+const choreFeed = (req, res) => {
+  const isLoggedIn = req.session.isLoggedIn;
+
+  if (isLoggedIn) {
+    User.find({ username: req.session.username }).then(async (result) => {
+      const householdFeed = mongoose.model(
+        "household_" + result[0].household_name + "_feed",
+        householdFeedSchema
+      );
+      householdFeed.find()
+      .then((result)=>{
+        res.render("choreFeed", {feeds: result})
+      })
+    });
+  } else {
+    res.redirect("/log-in");
+  }
+};
+
 module.exports = {
   home,
   createHousehold,
@@ -590,4 +613,5 @@ module.exports = {
   updateChoresToday,
   choreDone,
   choreDonePost,
+  choreFeed,
 };
