@@ -6,7 +6,7 @@ const householdFeedSchema = new Schema(
     adminID: { type: String, require: true },
     img: { type: String, require: true },
     chore_name: { type: String, require: true },
-    chore_id: { type: String, require: true },
+    choreID: { type: String, require: true },
     username: { type: String, require: true },
     time: { type: String, require: true },
     date: { type: Date, require: true },

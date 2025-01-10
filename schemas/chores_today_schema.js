@@ -12,6 +12,7 @@ const choreTodaySchema = new Schema(
     points: { type: Number, require: true },
     frequency: { type: String, require: true },
     done: { type: Boolean, require: true },
+    participants: { type: Array },
   },
   { timestamps: true }
 );

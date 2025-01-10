@@ -85,3 +85,6 @@ app.get("/add-member", siteController.addMember);
 app.post("/add-member", siteController.addMemberPost);
 
 app.get("/update_chores_today", siteController.updateChoresToday);
+
+app.get("/chore-done/:id", siteController.choreDone);
+app.post("/chore-done/:id", upload.single("image"), siteController.choreDonePost);

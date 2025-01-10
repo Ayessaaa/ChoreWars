@@ -15,12 +15,20 @@ const choresTodaySchema = require("../schemas/chores_today_schema");
 
 const updateChoresToday = (req, res) => {
   const isLoggedIn = req.session.isLoggedIn;
-  console.log("page")
+  const dayNames = [
+    "sunday",
+    "monday",
+    "tuesday",
+    "wednesday",
+    "thursday",
+    "friday",
+    "saturday",
+  ];
+  const today = new Date();
 
   if (isLoggedIn) {
     User.find({ username: req.session.username }).then((result) => {
       if (!result[0].admin) {
-        console.log("not admin")
         const householdMember = mongoose.model(
           "household_" + result[0].household_name + "_member",
           householdMemberSchema
@@ -43,13 +51,13 @@ const updateChoresToday = (req, res) => {
         householdMember
           .find({ username: req.session.username })
           .then((resultMember) => {
-            console.log(resultMember)
+            console.log(resultMember);
             // for every chore the member has
             for (let i = 0; i < resultMember[0].choresID.length; i++) {
               const choreID = resultMember[0].choresID[i];
               console.log("look");
               // look through the library of chores
-              householdChore.find({_id : choreID}).then((resultChore) => {
+              householdChore.find({ _id: choreID }).then((resultChore) => {
                 console.log(resultChore);
                 // check if the type is daily
                 if (resultChore[0].frequency === "daily") {
@@ -60,8 +68,8 @@ const updateChoresToday = (req, res) => {
                       choreID: choreID,
                       date: new Date().toISOString().split("T")[0],
                     })
-                    .then((resultChoreToday) => {
-                      console.log(resultChoreToday)
+                    .then(async (resultChoreToday) => {
+                      console.log(resultChoreToday);
                       if (resultChoreToday.length <= 0) {
                         console.log("less than 0");
                         const createChoreToday = new choresToday({
@@ -73,19 +81,47 @@ const updateChoresToday = (req, res) => {
                           points: resultChore[0].points,
                           frequency: resultChore[0].frequency,
                           done: false,
+                          participants: resultChore[0].participants,
                         });
 
-                        createChoreToday.save();
+                        await createChoreToday.save();
+                      }
+                    });
+                } else if (
+                  resultChore[0].frequency === dayNames[today.getDay()]
+                ) {
+                  console.log(resultChore[0].frequency);
+                  choresToday
+                    .find({
+                      choreID: choreID,
+                      date: new Date().toISOString().split("T")[0],
+                    })
+                    .then(async (resultChoreToday) => {
+                      console.log(resultChoreToday);
+                      if (resultChoreToday.length <= 0) {
+                        console.log("less than 0");
+                        const createChoreToday = new choresToday({
+                          username: req.session.username,
+                          chore_name: resultChore[0].chore_name,
+                          choreID: resultChore[0]._id,
+                          type: resultChore[0].type,
+                          date: new Date().toISOString().split("T")[0],
+                          points: resultChore[0].points,
+                          frequency: resultChore[0].frequency,
+                          done: false,
+                          participants: resultChore[0].participants,
+                        });
+
+                        await createChoreToday.save();
                       }
                     });
                 }
               });
             }
-          }).catch((err)=>console.log(err));
-      } else {
-        console.log("admin")
+          })
+          .catch((err) => console.log(err));
       }
-
+      res.redirect("/home");
     });
   } else {
     res.redirect("/log-in");
@@ -128,7 +164,35 @@ const home = (req, res) => {
             });
         }
       } else {
-        res.render("home", { username: req.session.username });
+        User.find({ username: req.session.username }).then((result) => {
+          const choresToday = mongoose.model(
+            "today_" +
+              result[0].household_name +
+              "_" +
+              req.session.username +
+              "_chore",
+            choresTodaySchema
+          );
+
+          const householdFeed = mongoose.model(
+            "household_" + result[0].household_name + "_feed",
+            householdFeedSchema
+          );
+
+          choresToday
+            .find({ done: false })
+            .then((resultChore) => {
+              householdFeed.find().then((resultFeed)=>{
+
+                res.render("home", {
+                  username: req.session.username,
+                  chores: resultChore,
+                  feeds: resultFeed
+                });
+              })
+            })
+            .catch((err) => console.log(err));
+        });
       }
     });
   } else {
@@ -403,6 +467,116 @@ const addMemberPost = (req, res) => {
   }
 };
 
+const choreDone = (req, res) => {
+  const isLoggedIn = req.session.isLoggedIn;
+
+  if (isLoggedIn) {
+    User.find({ username: req.session.username }).then((result) => {
+      const choresToday = mongoose.model(
+        "today_" +
+          result[0].household_name +
+          "_" +
+          req.session.username +
+          "_chore",
+        choresTodaySchema
+      );
+
+      const today = new Date();
+      console.log(today.getHours());
+
+      let hour = today.getHours();
+      let am_pm = "AM";
+
+      if (today.getHours() > 12) {
+        hour = today.getHours() - 12;
+      }
+
+      if (today.getHours() >= 12 && today.getHours() <= 23) {
+        let am_pm = "PM";
+      }
+
+      choresToday.find({ _id: req.params.id }).then((resultChore) => {
+        res.render("choreDone", {
+          chore: resultChore[0],
+          username: req.session.username,
+          time: hour + ":" + today.getMinutes() + " " + am_pm,
+          date:
+            today.toString().split(" ")[1] +
+            " " +
+            today.toString().split(" ")[2],
+        });
+      });
+    });
+  } else {
+    res.redirect("/log-in");
+  }
+};
+
+const choreDonePost = (req, res) => {
+  const isLoggedIn = req.session.isLoggedIn;
+
+  if (isLoggedIn) {
+    var path = "https://fl-1.cdn.flockler.com/embed/no-image.svg";
+
+    try {
+      path = req.file.path;
+    } catch {
+      path = "https://fl-1.cdn.flockler.com/embed/no-image.svg";
+    }
+    User.find({ username: req.session.username }).then((result) => {
+      const householdFeed = mongoose.model(
+        "household_" + result[0].household_name + "_feed",
+        householdFeedSchema
+      );
+
+      const choresToday = mongoose.model(
+        "today_" +
+          result[0].household_name +
+          "_" +
+          req.session.username +
+          "_chore",
+        choresTodaySchema
+      );
+
+      choresToday.findOneAndUpdate({ _id: req.params.id }, { done: true });
+
+      const today = new Date();
+      console.log(today.getHours());
+
+      let hour = today.getHours();
+      let am_pm = "AM";
+
+      if (today.getHours() > 12) {
+        hour = today.getHours() - 12;
+      }
+
+      if (today.getHours() >= 12 && today.getHours() <= 23) {
+        let am_pm = "PM";
+      }
+
+      choresToday.find({ _id: req.params.id }).then((resultChore) => {
+        const feed = new householdFeed({
+          img: path,
+          chore_name: resultChore[0].chore_name,
+          choreID: resultChore[0].choreID,
+          username: req.session.username,
+          time: hour + ":" + today.getMinutes() + " " + am_pm,
+          date: today,
+          userID: result[0]._id,
+          points: resultChore[0].points,
+          household: result[0].household_name,
+        });
+
+        feed.save();
+
+        res.redirect("/home");
+      });
+    });
+  } else {
+    res.redirect("/log-in");
+  }
+};
+
 module.exports = {
   home,
   createHousehold,
@@ -414,4 +588,6 @@ module.exports = {
   addMember,
   addMemberPost,
   updateChoresToday,
+  choreDone,
+  choreDonePost,
 };

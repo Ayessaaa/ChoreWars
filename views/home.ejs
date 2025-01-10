@@ -203,7 +203,7 @@
       <p class="font-semibold text-slate-300 text-2xl lg:text-left text-center">
         Welcome Back,
         <span
-          class=" capitalize font-bold text-3xl bg-gradient-to-r text-transparent bg-clip-text from-blue-500 to-sky-500"
+          class="capitalize font-bold text-3xl bg-gradient-to-r text-transparent bg-clip-text from-blue-500 to-sky-500"
           ><%= username %></span
         >
       </p>
@@ -218,7 +218,7 @@
           <div
             class="bg-slate-900/80 mx-auto px-5 py-3 rounded-[calc(1.5rem-1px)] h-full"
           >
-            <div class="flex flex-col items-center mx-auto w-fit gap-2">
+            <div class="flex flex-col items-center mx-auto w-fit gap-2 mb-5">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -239,7 +239,10 @@
               </p>
             </div>
 
-            <div class="flex mt-5 gap-1">
+            <% for (let i = 0; i < chores.length; i++) { const chore =
+            chores[i]; %>
+
+            <div class="flex mt-1.5 gap-1">
               <div
                 class="border border-red-500/50 rounded-xl py-2 px-3 bg-red-600/10 flex gap-3 items-center flex-1"
               >
@@ -265,11 +268,16 @@
                   </g>
                 </svg>
                 <div class="flex-1">
-                  <p class="text-slate-200">Take out the trash</p>
-                  <p class="text-slate-400 text-xs -mt-1">Chore of: User</p>
+                  <p class="text-slate-200"><%= chore.chore_name %></p>
+                  <p class="text-slate-400 text-xs -mt-1">
+                    Chore of: <% for (let i = 0; i < chore.participants.length;
+                    i++) { const participant = chore.participants[i]; %> <%=
+                    participant %><%= i+1<chore.participants.length ? "," : ""
+                    %> <% } %>
+                  </p>
                 </div>
 
-                <button title="done">
+                <button title="done" onclick="window.location.href = '/chore-done/<%= chore._id %>'">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 20 20"
@@ -288,12 +296,14 @@
               <div
                 class="bg-orange-500/10 border border-orange-500/50 rounded-xl px-5 flex flex-col items-center justify-center"
               >
-                <p class="text-2xl font-bold text-slate-300">2</p>
+                <p class="text-2xl font-bold text-slate-300"><%= chore.points %></p>
                 <p class="-mt-2 text-sm text-orange-600/50 font-medium">
                   points
                 </p>
               </div>
             </div>
+
+            <% } %>
           </div>
         </div>
 
@@ -459,87 +469,92 @@
         <p class="text-slate-300 font-medium text-lg text-center">Chore Feed</p>
       </div>
 
-      <div
-        class="w-[450px] rounded-3xl p-px bg-gradient-to-b from-yellow-500 to-yellow-500/10 mt-5 mx-auto"
-      >
+      <% for (let i = 0; i < feeds.length; i++) {
+        const feed = feeds[i]; %>
+        
         <div
-          class="bg-slate-900/80 mx-auto px-5 py-5 rounded-[calc(1.5rem-1px)] h-full flex gap-5"
+          class="w-[450px] rounded-3xl p-px bg-gradient-to-b from-yellow-500 to-yellow-500/10 mt-5 mx-auto"
         >
-          <img src="imgs/pfp.jpg" alt="" class="rounded-md w-44" />
-          <div class="flex flex-col items-center flex-1">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              xmlns:xlink="http://www.w3.org/1999/xlink"
-              version="1.1"
-              id="Capa_1"
-              viewBox="0 0 512 512"
-              xml:space="preserve"
-              class="size-8 drop-shadow-[0_10px_10px_rgba(234,179,8,.5)] fill-yellow-500 group-hover:fill-yellow-600 transition-all group-active:fill-yellow-500"
-            >
-              <g>
-                <path
-                  d="M490.667,96c0-17.673-14.327-32-32-32h-80.555C364.632,25.757,328.549,0.13,288,0h-64   c-40.549,0.13-76.632,25.757-90.112,64H53.333c-17.673,0-32,14.327-32,32l0,0c0,17.673,14.327,32,32,32H64v266.667   C64,459.468,116.532,512,181.333,512h149.333C395.468,512,448,459.468,448,394.667V128h10.667   C476.34,128,490.667,113.673,490.667,96z M384,394.667C384,424.122,360.122,448,330.667,448H181.333   C151.878,448,128,424.122,128,394.667V128h256V394.667z"
-                />
-                <path
-                  d="M202.667,384c17.673,0,32-14.327,32-32V224c0-17.673-14.327-32-32-32s-32,14.327-32,32v128   C170.667,369.673,184.994,384,202.667,384z"
-                />
-                <path
-                  d="M309.333,384c17.673,0,32-14.327,32-32V224c0-17.673-14.327-32-32-32s-32,14.327-32,32v128   C277.333,369.673,291.66,384,309.333,384z"
-                />
-              </g>
-            </svg>
-            <p class="font-medium text-slate-200 mt-3">Taking out the trash</p>
-            <p class="text-slate-400 text-sm">By: User</p>
-
-            <div class="flex gap-2 mt-3">
-              <div
-                class="flex items-center bg-yellow-500/10 gap-2 text-xs px-2 py-1 text-yellow-500 drop-shadow-[0_5px_10px_rgba(234,179,8,.5)] rounded-full"
+          <div
+            class="bg-slate-900/80 mx-auto px-5 py-5 rounded-[calc(1.5rem-1px)] h-full flex gap-5"
+          >
+            <img src="<%= feed.img %>" alt="" class="rounded-md w-44" />
+            <div class="flex flex-col items-center flex-1">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                version="1.1"
+                id="Capa_1"
+                viewBox="0 0 512 512"
+                xml:space="preserve"
+                class="size-8 drop-shadow-[0_10px_10px_rgba(234,179,8,.5)] fill-yellow-500 group-hover:fill-yellow-600 transition-all group-active:fill-yellow-500"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 16 16"
-                  fill="currentColor"
-                  class="size-4"
-                >
+                <g>
                   <path
-                    fill-rule="evenodd"
-                    d="M1 8a7 7 0 1 1 14 0A7 7 0 0 1 1 8Zm7.75-4.25a.75.75 0 0 0-1.5 0V8c0 .414.336.75.75.75h3.25a.75.75 0 0 0 0-1.5h-2.5v-3.5Z"
-                    clip-rule="evenodd"
+                    d="M490.667,96c0-17.673-14.327-32-32-32h-80.555C364.632,25.757,328.549,0.13,288,0h-64   c-40.549,0.13-76.632,25.757-90.112,64H53.333c-17.673,0-32,14.327-32,32l0,0c0,17.673,14.327,32,32,32H64v266.667   C64,459.468,116.532,512,181.333,512h149.333C395.468,512,448,459.468,448,394.667V128h10.667   C476.34,128,490.667,113.673,490.667,96z M384,394.667C384,424.122,360.122,448,330.667,448H181.333   C151.878,448,128,424.122,128,394.667V128h256V394.667z"
                   />
-                </svg>
-                <p class="font-medium">8:30 AM</p>
-              </div>
-              <div
-                class="flex items-center bg-yellow-500/10 gap-2 text-xs px-2 py-1 text-yellow-500 drop-shadow-[0_5px_10px_rgba(234,179,8,.5)] rounded-full"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 16 16"
-                  fill="currentColor"
-                  class="size-4"
-                >
                   <path
-                    fill-rule="evenodd"
-                    d="M4 1.75a.75.75 0 0 1 1.5 0V3h5V1.75a.75.75 0 0 1 1.5 0V3a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2V1.75ZM4.5 6a1 1 0 0 0-1 1v4.5a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1h-7Z"
-                    clip-rule="evenodd"
+                    d="M202.667,384c17.673,0,32-14.327,32-32V224c0-17.673-14.327-32-32-32s-32,14.327-32,32v128   C170.667,369.673,184.994,384,202.667,384z"
                   />
-                </svg>
+                  <path
+                    d="M309.333,384c17.673,0,32-14.327,32-32V224c0-17.673-14.327-32-32-32s-32,14.327-32,32v128   C277.333,369.673,291.66,384,309.333,384z"
+                  />
+                </g>
+              </svg>
+              <p class="font-medium text-slate-200 mt-3"><%= feed.chore_name %></p>
+              <p class="text-slate-400 text-sm">By: <%= feed.username %></p>
 
-                <p class="font-medium">Dec 12</p>
-              </div>
-            </div>
-
-            <div class="text-center flex-1 flex">
-              <p class="text-xl font-bold text-slate-200 bottom-0 mt-auto">
-                3
-                <span class="text-sm font-medium text-yellow-500/70 -mt-1"
-                  >points</span
+              <div class="flex gap-2 mt-3">
+                <div
+                  class="flex items-center bg-yellow-500/10 gap-2 text-xs px-2 py-1 text-yellow-500 drop-shadow-[0_5px_10px_rgba(234,179,8,.5)] rounded-full"
                 >
-              </p>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 16 16"
+                    fill="currentColor"
+                    class="size-4"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M1 8a7 7 0 1 1 14 0A7 7 0 0 1 1 8Zm7.75-4.25a.75.75 0 0 0-1.5 0V8c0 .414.336.75.75.75h3.25a.75.75 0 0 0 0-1.5h-2.5v-3.5Z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                  <p class="font-medium"><%= feed.time %></p>
+                </div>
+                <div
+                  class="flex items-center bg-yellow-500/10 gap-2 text-xs px-2 py-1 text-yellow-500 drop-shadow-[0_5px_10px_rgba(234,179,8,.5)] rounded-full"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 16 16"
+                    fill="currentColor"
+                    class="size-4"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M4 1.75a.75.75 0 0 1 1.5 0V3h5V1.75a.75.75 0 0 1 1.5 0V3a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2V1.75ZM4.5 6a1 1 0 0 0-1 1v4.5a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1h-7Z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+
+                  <p class="font-medium"><%= feed.date.toString().split(" ")[1]+" "+feed.date.toString().split(" ")[2] %></p>
+                </div>
+              </div>
+
+              <div class="text-center flex-1 flex">
+                <p class="text-xl font-bold text-slate-200 bottom-0 mt-auto">
+                  <%= feed.points %>
+                  <span class="text-sm font-medium text-yellow-500/70 -mt-1"
+                    >points</span
+                  >
+                </p>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+
+      <% } %>
     </div>
   </body>
 </html>

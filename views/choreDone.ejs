@@ -198,14 +198,16 @@
       </button>
     </div>
 
-    <div class="lg:w-1/2 min-w-[500px] lg:min-w-[900px] mx-auto mt-10">
+    <form method="POST" enctype="multipart/form-data" class="lg:w-1/2 min-w-[500px] lg:min-w-[900px] mx-auto mt-10">
       <p class="font-semibold text-slate-300 text-2xl text-center">
         <span
           class="font-bold text-3xl bg-gradient-to-r text-transparent bg-clip-text from-orange-500 to-yellow-500"
           >Chore Proof</span
         >
       </p>
-      <p class="text-slate-300 text-sm font-medium text-center">Did you really do the chore? Give us proof!</p>
+      <p class="text-slate-300 text-sm font-medium text-center">
+        Did you really do the chore? Give us proof!
+      </p>
       <div
         class="w-[450px] rounded-3xl p-px bg-gradient-to-b from-yellow-500 to-yellow-500/10 mt-10 mx-auto"
       >
@@ -220,7 +222,7 @@
             </script>
             <img
               id="pfp"
-              src="imgs/no-image.svg"
+              src="https://fl-1.cdn.flockler.com/embed/no-image.svg"
               alt=""
               class="rounded-md w-44 mx-auto"
             />
@@ -258,8 +260,8 @@
                 />
               </g>
             </svg>
-            <p class="font-medium text-slate-200 mt-3">Taking out the trash</p>
-            <p class="text-slate-400 text-sm">By: User</p>
+            <p class="font-medium text-slate-200 mt-3"><%= chore.chore_name %></p>
+            <p class="text-slate-400 text-sm capitalize">By: <%= username %></p>
 
             <div class="flex gap-2 mt-3">
               <div
@@ -277,7 +279,7 @@
                     clip-rule="evenodd"
                   />
                 </svg>
-                <p class="font-medium">8:30 AM</p>
+                <p class="font-medium"><%= time %></p>
               </div>
               <div
                 class="flex items-center bg-yellow-500/10 gap-2 text-xs px-2 py-1 text-yellow-500 drop-shadow-[0_5px_10px_rgba(234,179,8,.5)] rounded-full"
@@ -295,12 +297,12 @@
                   />
                 </svg>
 
-                <p class="font-medium">Dec 12</p>
+                <p class="font-medium"><%= date %></p>
               </div>
             </div>
 
             <div class="text-center flex-1 flex-col content-end">
-              <p class="text-xl font-bold text-slate-200 bottom-0 mt-auto">3</p>
+              <p class="text-xl font-bold text-slate-200 bottom-0 mt-auto"><%= chore.points %></p>
               <p class="text-sm font-medium text-yellow-500/70 -mt-1">points</p>
 
               <button
@@ -311,7 +313,7 @@
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
                   fill="currentColor"
-                  class="size-5 fill-white drop-shadow-[0_5px_5px_rgba(234,179,8,.3)]  transition-all group-active:fill-yellow-500"
+                  class="size-5 fill-white drop-shadow-[0_5px_5px_rgba(234,179,8,.3)] transition-all group-active:fill-yellow-500"
                 >
                   <path
                     fill-rule="evenodd"
@@ -324,6 +326,6 @@
           </div>
         </div>
       </div>
-    </div>
+    </form>
   </body>
 </html>
