@@ -90,3 +90,5 @@ app.get("/chore-done/:id", siteController.choreDone);
 app.post("/chore-done/:id", upload.single("image"), siteController.choreDonePost);
 
 app.get("/chore-feed", siteController.choreFeed)
+
+app.get("/leaderboard", siteController.leaderboard)

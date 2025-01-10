@@ -179,15 +179,26 @@ const home = (req, res) => {
             householdFeedSchema
           );
 
+          const householdMember = mongoose.model(
+            "household_" + result[0].household_name + "_member",
+            householdMemberSchema
+          );
+
           choresToday
             .find({ done: false })
             .then((resultChore) => {
               householdFeed.find().then((resultFeed) => {
-                res.render("home", {
-                  username: req.session.username,
-                  chores: resultChore,
-                  feeds: resultFeed,
-                });
+                householdMember
+                  .find()
+                  .sort({ points: "desc" })
+                  .then((resultMember) => {
+                    res.render("home", {
+                      username: req.session.username,
+                      chores: resultChore,
+                      feeds: resultFeed,
+                      members: resultMember,
+                    });
+                  });
               });
             })
             .catch((err) => console.log(err));
@@ -528,6 +539,11 @@ const choreDonePost = (req, res) => {
         householdFeedSchema
       );
 
+      const householdMember = mongoose.model(
+        "household_" + result[0].household_name + "_member",
+        householdMemberSchema
+      );
+
       const choresToday = mongoose.model(
         "today_" +
           result[0].household_name +
@@ -536,6 +552,14 @@ const choreDonePost = (req, res) => {
           "_chore",
         choresTodaySchema
       );
+
+      choresToday.find({ _id: req.params.id }).then(async (result) => {
+        await householdMember.findOneAndUpdate(
+          { username: req.session.username },
+          { $inc: { points: result[0].points } }
+        );
+        console.log(result[0].points);
+      });
 
       await choresToday
         .findOneAndUpdate({ _id: req.params.id }, { done: true })
@@ -590,10 +614,28 @@ const choreFeed = (req, res) => {
         "household_" + result[0].household_name + "_feed",
         householdFeedSchema
       );
-      householdFeed.find()
-      .then((result)=>{
-        res.render("choreFeed", {feeds: result})
-      })
+      householdFeed.find().then((result) => {
+        res.render("choreFeed", { feeds: result });
+      });
+    });
+  } else {
+    res.redirect("/log-in");
+  }
+};
+
+const leaderboard = (req, res) => {
+  const isLoggedIn = req.session.isLoggedIn;
+
+  if (isLoggedIn) {
+    User.find({ username: req.session.username }).then((result) => {
+      const householdMember = mongoose.model(
+        "household_" + result[0].household_name + "_member",
+        householdMemberSchema
+      );
+
+      householdMember.find().sort({points: "desc"}).then((resultMember) => {
+        res.render("leaderboard", { members: resultMember });
+      });
     });
   } else {
     res.redirect("/log-in");
@@ -614,4 +656,5 @@ module.exports = {
   choreDone,
   choreDonePost,
   choreFeed,
+  leaderboard,
 };
