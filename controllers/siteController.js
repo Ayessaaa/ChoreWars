@@ -386,7 +386,7 @@ const addChorePost = (req, res) => {
       let participantsArray = [];
       let participantsIDs = [];
 
-      for (let i = 4; i < Object.keys(req.body).length; i++) {
+      for (let i = 3; i < Object.keys(req.body).length; i++) {
         const element = Object.keys(req.body)[i];
         participantsArray.push(element.split("-")[0]);
         participantsIDs.push(element.split("-")[1]);
@@ -667,24 +667,108 @@ const chores = (req, res) => {
           .then((resultChores) => {
             res.render("chores", { chores: resultChores });
           });
-      }
-      else {
+      } else {
         const householdChore = mongoose.model(
           "household_" + result[0].household_name + "_chore",
           householdChoreSchema
         );
 
-        householdChore
-          .find()
-          .then((resultChores) => {
-            res.render("choresAdmin", { chores: resultChores });
-          });
+        householdChore.find().then((resultChores) => {
+          res.render("choresAdmin", { chores: resultChores });
+        });
       }
     });
   } else {
     res.redirect("/log-in");
   }
 };
+
+const editChore = (req, res) => {
+  const isLoggedIn = req.session.isLoggedIn;
+
+  if (isLoggedIn && req.session.admin) {
+    User.find({ username: req.session.username }).then((result) => {
+      const householdChore = mongoose.model(
+        "household_" + result[0].household_name + "_chore",
+        householdChoreSchema
+      );
+
+      const householdMember = mongoose.model(
+        "household_" + result[0].household_name + "_member",
+        householdMemberSchema
+      );
+
+      householdChore.find({ _id: req.params.id }).then((resultChore) => {
+        householdMember.find().then((resultMember) => {
+          res.render("editChore", {
+            chore: resultChore[0],
+            household_name: result[0].household_name,
+            members: resultMember,
+          });
+        });
+      });
+    });
+  } else {
+    res.redirect("/log-in");
+  }
+};
+
+const editChorePost = (req, res) => {
+  const isLoggedIn = req.session.isLoggedIn;
+
+  if (isLoggedIn && req.session.admin) {
+    User.find({ username: req.session.username }).then((result) => {
+      const householdChore = mongoose.model(
+        "household_" + result[0].household_name + "_chore",
+        householdChoreSchema
+      );
+
+      let participantsArray = [];
+      let participantsIDs = [];
+
+      for (let i = 3; i < Object.keys(req.body).length; i++) {
+        const element = Object.keys(req.body)[i];
+        participantsArray.push(element.split("-")[0]);
+        participantsIDs.push(element.split("-")[1]);
+      }
+      console.log(req.body)
+
+      householdChore.findOneAndUpdate({_id: req.params.id},
+        {chore_name: req.body.chore,
+          frequency: req.body.frequency,
+          points: req.body.points,
+          participants: participantsArray,
+          participantsID: participantsIDs
+        },
+        {new:true}
+      ).then((res)=>{console.log(res)})
+      .catch((err)=>{console.log(err)})
+
+      res.redirect("/chores")
+    })
+  } else {
+    res.redirect("/log-in");
+  }
+};
+
+const deleteChore = (req, res)=>{
+  const isLoggedIn = req.session.isLoggedIn;
+
+  if (isLoggedIn && req.session.admin) {
+    User.find({ username: req.session.username }).then(async(result) => {
+      const householdChore = mongoose.model(
+        "household_" + result[0].household_name + "_chore",
+        householdChoreSchema
+      );
+
+      await householdChore.findOneAndDelete({_id: req.params.id})
+
+      res.redirect("/chores")
+    })
+  }else {
+    res.redirect("/log-in");
+  }
+}
 
 module.exports = {
   home,
@@ -702,4 +786,7 @@ module.exports = {
   choreFeed,
   leaderboard,
   chores,
+  editChore,
+  editChorePost,
+  deleteChore
 };

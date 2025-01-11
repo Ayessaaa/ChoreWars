@@ -865,6 +865,10 @@ video {
   width: 100%;
 }
 
+.w-1\/2 {
+  width: 50%;
+}
+
 .min-w-\[300px\] {
   min-width: 300px;
 }
@@ -1094,6 +1098,10 @@ video {
 
 .bg-yellow-700\/10 {
   background-color: rgb(161 98 7 / 0.1);
+}
+
+.bg-yellow-500\/20 {
+  background-color: rgb(234 179 8 / 0.2);
 }
 
 .bg-gradient-to-b {

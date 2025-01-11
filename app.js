@@ -94,3 +94,8 @@ app.get("/chore-feed", siteController.choreFeed)
 app.get("/leaderboard", siteController.leaderboard)
 
 app.get("/chores", siteController.chores)
+
+app.get("/edit-chore/:id", siteController.editChore)
+app.post("/edit-chore/:id", siteController.editChorePost)
+
+app.get("/delete-chore/:id", siteController.deleteChore)
