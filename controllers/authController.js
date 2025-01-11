@@ -36,6 +36,7 @@ const authSignUp = async (req, res) => {
       await newUser.save();
       req.session.isLoggedIn = true;
       req.session.username = username.toLowerCase();
+      req.session.admin = true;
 
       res.redirect("/home");
     } else {
@@ -59,11 +60,11 @@ const authLogIn = async (req, res) => {
   const { username, password } = req.body;
   console.log(username, password);
   try {
-    const result = await User.find({ username: username.toLowerCase() });
-    if (result.length == 0) {
+    const resultUser = await User.find({ username: username.toLowerCase() });
+    if (resultUser.length == 0) {
       res.redirect("/log-in/acc-not-exists");
     } else {
-      bcrypt.compare(password, result[0].password, (err, result) => {
+      bcrypt.compare(password, resultUser[0].password, (err, result) => {
         if (err) {
           console.error("Error comparing passwords:", err);
           return;
@@ -71,6 +72,7 @@ const authLogIn = async (req, res) => {
 
         if (result) {
           req.session.isLoggedIn = true;
+          req.session.admin = resultUser[0].admin
           req.session.username = username;
           res.redirect("/update_chores_today");
         } else {

@@ -604,16 +604,6 @@ video {
   margin-bottom: 2.5rem;
 }
 
-.my-5 {
-  margin-top: 1.25rem;
-  margin-bottom: 1.25rem;
-}
-
-.my-8 {
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-}
-
 .my-7 {
   margin-top: 1.75rem;
   margin-bottom: 1.75rem;
@@ -677,6 +667,10 @@ video {
 
 .mb-5 {
   margin-bottom: 1.25rem;
+}
+
+.mt-0\.5 {
+  margin-top: 0.125rem;
 }
 
 .mt-1 {
@@ -894,6 +888,10 @@ video {
 
 .cursor-pointer {
   cursor: pointer;
+}
+
+.flex-row {
+  flex-direction: row;
 }
 
 .flex-col {
@@ -1221,8 +1219,8 @@ video {
   fill: #eab308;
 }
 
-.fill-orange-500\/50 {
-  fill: rgb(249 115 22 / 0.5);
+.fill-red-500\/10 {
+  fill: rgb(239 68 68 / 0.1);
 }
 
 .stroke-red-500 {
@@ -1418,6 +1416,11 @@ video {
   color: rgb(212 212 212 / var(--tw-text-opacity, 1));
 }
 
+.text-orange-500 {
+  --tw-text-opacity: 1;
+  color: rgb(249 115 22 / var(--tw-text-opacity, 1));
+}
+
 .text-orange-500\/90 {
   color: rgb(249 115 22 / 0.9);
 }
@@ -1542,11 +1545,6 @@ video {
 
 .text-yellow-500\/90 {
   color: rgb(234 179 8 / 0.9);
-}
-
-.text-orange-500 {
-  --tw-text-opacity: 1;
-  color: rgb(249 115 22 / var(--tw-text-opacity, 1));
 }
 
 .underline {
@@ -1706,13 +1704,8 @@ video {
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 
-.drop-shadow-\[0_10px_10px_rgba\(249\2c 115\2c 22\2c \.5\)\] {
-  --tw-drop-shadow: drop-shadow(0 10px 10px rgba(249,115,22,.5));
-  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
-}
-
-.drop-shadow-\[0_10px_5px_rgba\(249\2c 115\2c 22\2c \.3\)\] {
-  --tw-drop-shadow: drop-shadow(0 10px 5px rgba(249,115,22,.3));
+.drop-shadow-\[0_5px_5px_rgba\(239\2c 68\2c 68\2c \.3\)\] {
+  --tw-drop-shadow: drop-shadow(0 5px 5px rgba(239,68,68,.3));
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 
@@ -1924,6 +1917,10 @@ video {
 
 .active\:bg-yellow-500\/50:active {
   background-color: rgb(234 179 8 / 0.5);
+}
+
+.active\:fill-orange-600:active {
+  fill: #ea580c;
 }
 
 .active\:fill-red-600:active {

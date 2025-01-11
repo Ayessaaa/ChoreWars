@@ -28,7 +28,7 @@ const updateChoresToday = (req, res) => {
 
   if (isLoggedIn) {
     User.find({ username: req.session.username }).then((result) => {
-      if (!result[0].admin) {
+      if (req.session.admin) {
         const householdMember = mongoose.model(
           "household_" + result[0].household_name + "_member",
           householdMemberSchema
@@ -186,6 +186,7 @@ const home = (req, res) => {
 
           choresToday
             .find({ done: false })
+            .sort({ date: "asc" })
             .then((resultChore) => {
               householdFeed.find().then((resultFeed) => {
                 householdMember
@@ -650,18 +651,35 @@ const chores = (req, res) => {
 
   if (isLoggedIn) {
     User.find({ username: req.session.username }).then((result) => {
-      const choresToday = mongoose.model(
-        "today_" +
-          result[0].household_name +
-          "_" +
-          req.session.username +
-          "_chore",
-        choresTodaySchema
-      );
+      if (!req.session.admin) {
+        const choresToday = mongoose.model(
+          "today_" +
+            result[0].household_name +
+            "_" +
+            req.session.username +
+            "_chore",
+          choresTodaySchema
+        );
 
-      choresToday.find({done: false}).then((resultChores)=>{
-        res.render("chores", {chores: resultChores})
-      })
+        choresToday
+          .find({ done: false })
+          .sort({ date: "asc" })
+          .then((resultChores) => {
+            res.render("chores", { chores: resultChores });
+          });
+      }
+      else {
+        const householdChore = mongoose.model(
+          "household_" + result[0].household_name + "_chore",
+          householdChoreSchema
+        );
+
+        householdChore
+          .find()
+          .then((resultChores) => {
+            res.render("choresAdmin", { chores: resultChores });
+          });
+      }
     });
   } else {
     res.redirect("/log-in");
