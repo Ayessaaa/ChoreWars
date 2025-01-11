@@ -92,3 +92,5 @@ app.post("/chore-done/:id", upload.single("image"), siteController.choreDonePost
 app.get("/chore-feed", siteController.choreFeed)
 
 app.get("/leaderboard", siteController.leaderboard)
+
+app.get("/chores", siteController.chores)

@@ -633,9 +633,35 @@ const leaderboard = (req, res) => {
         householdMemberSchema
       );
 
-      householdMember.find().sort({points: "desc"}).then((resultMember) => {
-        res.render("leaderboard", { members: resultMember });
-      });
+      householdMember
+        .find()
+        .sort({ points: "desc" })
+        .then((resultMember) => {
+          res.render("leaderboard", { members: resultMember });
+        });
+    });
+  } else {
+    res.redirect("/log-in");
+  }
+};
+
+const chores = (req, res) => {
+  const isLoggedIn = req.session.isLoggedIn;
+
+  if (isLoggedIn) {
+    User.find({ username: req.session.username }).then((result) => {
+      const choresToday = mongoose.model(
+        "today_" +
+          result[0].household_name +
+          "_" +
+          req.session.username +
+          "_chore",
+        choresTodaySchema
+      );
+
+      choresToday.find({done: false}).then((resultChores)=>{
+        res.render("chores", {chores: resultChores})
+      })
     });
   } else {
     res.redirect("/log-in");
@@ -657,4 +683,5 @@ module.exports = {
   choreDonePost,
   choreFeed,
   leaderboard,
+  chores,
 };

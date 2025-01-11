@@ -64,6 +64,7 @@
     <div class="flex w-fit mt-7 gap-2 mx-auto">
       <div class="bg-slate-800/60 flex w-fit mx-auto p-2 rounded-full gap-3">
         <button
+          onclick="window.location.href = '/home'"
           title="home"
           class="p-px rounded-full hover:scale-105 transition-all group"
         >
@@ -88,6 +89,7 @@
         </button>
 
         <button
+          onclick="window.location.href = '/chores'"
           title="chores"
           class="p-px rounded-full hover:scale-105 transition-all group"
         >
@@ -113,6 +115,7 @@
         </button>
 
         <button
+          onclick="window.location.href = '/chore-feed'"
           title="history"
           class="p-px bg-gradient-to-b w-fit from-yellow-500 to-yellow-500/10 rounded-full hover:scale-105 transition-all group"
         >
@@ -136,6 +139,7 @@
         </button>
 
         <button
+          onclick="window.location.href = '/leaderboard'"
           title="leaderboard"
           class="p-px rounded-full hover:scale-105 transition-all group"
         >
@@ -157,6 +161,7 @@
         </button>
 
         <button
+          onclick="window.location.href = '/penalty'"
           title="penalty"
           class="p-px rounded-full hover:scale-105 transition-all group"
         >
@@ -178,6 +183,7 @@
         </button>
       </div>
       <button
+        onclick="window.location.href = '/logout'"
         title="log out"
         class="px-4 w-fit rounded-full flex items-center hover:text-red-600 active:bg-slate-900/70 active:text-red-500 group transition-all hover:scale-105"
       >
@@ -260,7 +266,7 @@
                 />
               </g>
             </svg>
-            <p class="font-medium text-slate-200 mt-3"><%= chore.chore_name %></p>
+            <p class="font-medium text-slate-200 mt-3 capitalize"><%= chore.chore_name %></p>
             <p class="text-slate-400 text-sm capitalize">By: <%= username %></p>
 
             <div class="flex gap-2 mt-3">
