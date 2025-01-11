@@ -99,3 +99,7 @@ app.get("/edit-chore/:id", siteController.editChore)
 app.post("/edit-chore/:id", siteController.editChorePost)
 
 app.get("/delete-chore/:id", siteController.deleteChore)
+
+app.get("/members", siteController.members)
+
+app.get("/delete-member/:id", siteController.deleteMember)
