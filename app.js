@@ -103,3 +103,5 @@ app.get("/delete-chore/:id", siteController.deleteChore)
 app.get("/members", siteController.members)
 
 app.get("/delete-member/:id", siteController.deleteMember)
+
+app.post("/profile/:id", upload.single("image"), siteController.profilePost)

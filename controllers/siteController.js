@@ -26,9 +26,10 @@ const updateChoresToday = (req, res) => {
   ];
   const today = new Date();
 
+
   if (isLoggedIn) {
     User.find({ username: req.session.username }).then((result) => {
-      if (req.session.admin) {
+      if (!req.session.admin) {
         const householdMember = mongoose.model(
           "household_" + result[0].household_name + "_member",
           householdMemberSchema
@@ -76,7 +77,6 @@ const updateChoresToday = (req, res) => {
                           username: req.session.username,
                           chore_name: resultChore[0].chore_name,
                           choreID: resultChore[0]._id,
-                          type: resultChore[0].type,
                           date: new Date().toISOString().split("T")[0],
                           points: resultChore[0].points,
                           frequency: resultChore[0].frequency,
@@ -104,7 +104,6 @@ const updateChoresToday = (req, res) => {
                           username: req.session.username,
                           chore_name: resultChore[0].chore_name,
                           choreID: resultChore[0]._id,
-                          type: resultChore[0].type,
                           date: new Date().toISOString().split("T")[0],
                           points: resultChore[0].points,
                           frequency: resultChore[0].frequency,
@@ -215,7 +214,7 @@ const createHousehold = (req, res) => {
   const isLoggedIn = req.session.isLoggedIn;
 
   if (isLoggedIn) {
-    res.render("createHousehold", {username: req.session.username});
+    res.render("createHousehold", { username: req.session.username });
   } else {
     res.redirect("/log-in");
   }
@@ -255,13 +254,19 @@ const createHouseholdPost = async (req, res) => {
       });
 
     for (let i = 1; i < Object.values(req.body).length; i += 2) {
-      const member = new householdMember({
-        username: Object.values(req.body)[i].toLowerCase(),
-        fullname: Object.values(req.body)[i + 1],
-        household: req.body.household,
-      });
+      if (
+        Object.values(req.body)[i].toLowerCase() === "" ||
+        Object.values(req.body)[i + 1] === ""
+      ) {
+      } else {
+        const member = new householdMember({
+          username: Object.values(req.body)[i].toLowerCase(),
+          fullname: Object.values(req.body)[i + 1],
+          household: req.body.household,
+        });
 
-      await member.save();
+        await member.save();
+      }
     }
 
     res.redirect("/home");
@@ -390,6 +395,9 @@ const addChorePost = (req, res) => {
         const element = Object.keys(req.body)[i];
         participantsArray.push(element.split("-")[0]);
         participantsIDs.push(element.split("-")[1]);
+
+      console.log(element.split("-")[0])
+
       }
 
       const chore = new householdChore({
@@ -408,7 +416,7 @@ const addChorePost = (req, res) => {
         householdMemberSchema
       );
 
-      for (let i = 4; i < Object.keys(req.body).length; i++) {
+      for (let i = 3; i < Object.keys(req.body).length; i++) {
         const element = Object.keys(req.body)[i];
         participantsArray.push(element.split("-")[0]);
         participantsIDs.push(element.split("-")[1]);
@@ -782,16 +790,16 @@ const members = (req, res) => {
   const isLoggedIn = req.session.isLoggedIn;
 
   if (isLoggedIn) {
-    if(req.session.admin){
+    if (req.session.admin) {
       User.find({ username: req.session.username }).then(async (result) => {
         const householdMember = mongoose.model(
           "household_" + result[0].household_name + "_member",
           householdMemberSchema
         );
-  
-        householdMember.find().then((result)=>{
-          res.render("members", {members: result})
-        })
+
+        householdMember.find().then((result) => {
+          res.render("members", { members: result });
+        });
       });
     } else {
       User.find({ username: req.session.username }).then(async (result) => {
@@ -799,10 +807,12 @@ const members = (req, res) => {
           "household_" + result[0].household_name + "_member",
           householdMemberSchema
         );
-  
-        householdMember.find({username: req.session.username}).then((result)=>{
-          res.render("profile", {member: result[0]})
-        })
+
+        householdMember
+          .find({ username: req.session.username })
+          .then((result) => {
+            res.render("profile", { member: result[0] });
+          });
       });
     }
   } else {
@@ -810,7 +820,7 @@ const members = (req, res) => {
   }
 };
 
-const deleteMember = (req, res)=>{
+const deleteMember = (req, res) => {
   const isLoggedIn = req.session.isLoggedIn;
 
   if (isLoggedIn) {
@@ -827,7 +837,35 @@ const deleteMember = (req, res)=>{
   } else {
     res.redirect("/log-in");
   }
-}
+};
+
+const profilePost = (req, res) => {
+  const isLoggedIn = req.session.isLoggedIn;
+
+  if (isLoggedIn) {
+    var path = "https://fl-1.cdn.flockler.com/embed/no-image.svg";
+
+    try {
+      path = req.file.path;
+    } catch {
+      path = "https://fl-1.cdn.flockler.com/embed/no-image.svg";
+    }
+    User.find({ username: req.session.username }).then(async (result) => {
+      const householdMember = mongoose.model(
+        "household_" + result[0].household_name + "_member",
+        householdMemberSchema
+      );
+
+      await householdMember.findOneAndUpdate(
+        { username: req.session.username },
+        { fullname: req.body.fullname, img: path }
+      );
+    });
+    res.redirect("/home");
+  } else {
+    res.redirect("/log-in");
+  }
+};
 
 module.exports = {
   home,
@@ -849,5 +887,6 @@ module.exports = {
   editChorePost,
   deleteChore,
   members,
-  deleteMember
+  deleteMember,
+  profilePost,
 };
