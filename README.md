@@ -36,35 +36,49 @@ All icons used on Chore Wars are from Flaticon (UIcons) and Heroicons
 
 1. Clone the repository
 
+```
 git clone https://github.com/Ayessaaa/ChoreWars
+```
 
 2. Go to the directory
 
+```
 cd ChoreWars
+```
 
 3. Install dependecies
 
+```
 npm install
+```
 
 5. Create your own cluster on MongoDB Atlas
 
+```
 ChoreWars Project -> ChoreWars
+```
 
 6. Create a database on that cluster
 
+```
 ChoreWars Project -> ChoreWarsCluster -> ChoreWarsDB
+```
 
 7. Create your .env file and paste you DBURI, secret, and cloudinary credentials
 
+```
 DB_URI=
 secret=
 CLOUD_NAME=
 CLOUDINARY_KEY=
 CLOUDINARY_SECRET=
+```
 
 8. Start the Nodemon
 
+```
 nodemon app
+```
 
 ## ❕ Features
 ### Responsive Design
