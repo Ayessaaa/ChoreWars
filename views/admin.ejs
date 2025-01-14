@@ -208,8 +208,8 @@
       <p class="font-semibold text-slate-300 text-2xl lg:text-left text-center">
         Welcome Head,
         <span
-          class="font-bold text-3xl bg-gradient-to-r text-transparent bg-clip-text from-blue-500 to-sky-500"
-          >User</span
+          class="font-bold text-3xl bg-gradient-to-r text-transparent bg-clip-text from-blue-500 to-sky-500 capitalize"
+          ><%= username %></span
         >
       </p>
       <p class="text-slate-400 font-medium lg:text-left text-center">
@@ -298,7 +298,7 @@
                 </div>
 
                 <button
-                  onclick="copyContent('/join-link/<%=member._id%>')"
+                  onclick="copyContent('/join-link/<%=member._id%>/<%=member.household%>')"
                   class="bg-sky-600/20 py-1 h-4/5 px-2 flex items-center rounded-lg hover:scale-105 transition-all group"
                   title="link"
                 >
@@ -332,7 +332,7 @@
           <script>
             const copyContent = async (text) => {
               try {
-                await navigator.clipboard.writeText(text);
+                await navigator.clipboard.writeText("localhost:3000"+text);
                 console.log("Content copied to clipboard");
               } catch (err) {
                 console.error("Failed to copy: ", err);
