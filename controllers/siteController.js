@@ -718,10 +718,15 @@ const editChorePost = (req, res) => {
   const isLoggedIn = req.session.isLoggedIn;
 
   if (isLoggedIn && req.session.admin) {
-    User.find({ username: req.session.username }).then((result) => {
+    User.find({ username: req.session.username }).then(async (result) => {
       const householdChore = mongoose.model(
         "household_" + result[0].household_name + "_chore",
         householdChoreSchema
+      );
+
+      const householdMember = mongoose.model(
+        "household_" + result[0].household_name + "_member",
+        householdMemberSchema
       );
 
       let participantsArray = [];
@@ -731,10 +736,17 @@ const editChorePost = (req, res) => {
         const element = Object.keys(req.body)[i];
         participantsArray.push(element.split("-")[0]);
         participantsIDs.push(element.split("-")[1]);
+
+        await householdMember.findOneAndUpdate(
+          {  username:element.split("-")[0] },
+          {
+            $push: { choresID: req.params.id },
+          }
+        );
       }
       console.log(req.body);
 
-      householdChore
+      await householdChore
         .findOneAndUpdate(
           { _id: req.params.id },
           {
@@ -752,6 +764,7 @@ const editChorePost = (req, res) => {
         .catch((err) => {
           console.log(err);
         });
+
 
       res.redirect("/chores");
     });
